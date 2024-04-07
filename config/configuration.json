@@ -46,7 +46,7 @@
               "minimum": 0.2
             },
             "cue": {
-              "file": "D:\\Desktop\\Projetos\\Pessoal\\Mestrado\\OpenBCI_Python_Framework\\cues\\console_print.py",
+              "file": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\OpenBCI_Python_Framework\\cues\\console_print.py",
               "parameters": {
                 "message": "REST"
               }
@@ -62,7 +62,7 @@
               "minimum": 0.2
             },
             "cue": {
-              "file": "D:\\Desktop\\Projetos\\Pessoal\\Mestrado\\OpenBCI_Python_Framework\\cues\\console_print.py",
+              "file": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\OpenBCI_Python_Framework\\cues\\console_print.py",
               "parameters": {
                 "message": "CLOSE RIGHT FIST"
               }
@@ -78,7 +78,7 @@
               "minimum": 0.2
             },
             "cue": {
-              "file": "D:\\Desktop\\Projetos\\Pessoal\\Mestrado\\OpenBCI_Python_Framework\\cues\\console_print.py",
+              "file": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\OpenBCI_Python_Framework\\cues\\console_print.py",
               "parameters": {
                 "message": "REST"
               }
@@ -94,7 +94,7 @@
               "minimum": 0.2
             },
             "cue": {
-              "file": "D:\\Desktop\\Projetos\\Pessoal\\Mestrado\\OpenBCI_Python_Framework\\cues\\console_print.py",
+              "file": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\OpenBCI_Python_Framework\\cues\\console_print.py",
               "parameters": {
                 "message": "CLOSE LEFT FIST"
               }
@@ -213,7 +213,7 @@
         "number_of_components": 4,
         "training_set_size": 5,
         "save_after_training": true,
-        "save_file_path": "D:\\Desktop\\A\\csp",
+        "save_file_path": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\OpenBCI_Python_Framework\\savefile\\file",
         "load_trained": false,
         "enable_log": true,
         "buffer_options": {
