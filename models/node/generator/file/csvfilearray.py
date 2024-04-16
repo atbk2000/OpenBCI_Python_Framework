@@ -120,7 +120,6 @@ class CSVFileArray(SingleRunGeneratorNode):
                 timestamp_data.input_data_on_channel(data=[row_timestamp])
             self._csv_file.close()
             self.print('closed')
-
         return {
             self.OUTPUT_MAIN: main_data,
             self.OUTPUT_TIMESTAMP: timestamp_data
