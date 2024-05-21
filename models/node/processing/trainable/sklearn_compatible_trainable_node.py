@@ -1,6 +1,6 @@
 import abc
 import os
-from typing import List, Dict, Final, Any
+from typing import List, Dict, Final, Any, Tuple
 from statistics import mode
 
 import joblib
@@ -60,10 +60,10 @@ class SKLearnCompatibleTrainableNode(TrainableProcessingNode):
         self.sklearn_processor = None
         super()._initialize_parameter_fields(parameters)
         if self.sklearn_processor is None:
-            self.sklearn_processor: (TransformerMixin, BaseEstimator) = self._initialize_trainable_processor()
+            self.sklearn_processor: Tuple[TransformerMixin, BaseEstimator] = self._initialize_trainable_processor()
 
     @abc.abstractmethod
-    def _initialize_trainable_processor(self) -> (TransformerMixin, BaseEstimator):
+    def _initialize_trainable_processor(self) -> Tuple[TransformerMixin, BaseEstimator]:
         """ Initializes the trainable processor. This method should be implemented by the subclasses.
 
         :raises NotImplementedError: If the method is not implemented by the subclass.
@@ -188,6 +188,10 @@ class SKLearnCompatibleTrainableNode(TrainableProcessingNode):
         :return: The trained processor.
         :rtype: Any
         """
+        nsamples, nx, ny = data.shape
+        if nx > 2:
+            # Reshape the array into a 2D array for fit function
+            data = data.reshape((nsamples, nx*ny))
         return self.sklearn_processor.fit(data, label)
 
     def _train(self, data: FrameworkData, label: FrameworkData):

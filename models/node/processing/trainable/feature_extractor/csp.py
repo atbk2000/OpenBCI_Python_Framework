@@ -1,5 +1,5 @@
 import abc
-from typing import Final, Any
+from typing import Final, Any, Tuple
 
 import mne.decoding
 import numpy as np
@@ -69,7 +69,7 @@ class CSP(SKLearnFeatureExtractor):
         self.number_of_components = parameters['number_of_components']
         super()._initialize_parameter_fields(parameters)
 
-    def _initialize_trainable_processor(self) -> (TransformerMixin, BaseEstimator):
+    def _initialize_trainable_processor(self) -> Tuple[TransformerMixin, BaseEstimator]:
         """ Initializes the trainable processor of this node. In this case it initializes the sklearn CSP processor.
 
         :return: The initialized sklearn CSP processor.

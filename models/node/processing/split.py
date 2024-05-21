@@ -139,7 +139,6 @@ class Split(ProcessingNode):
             return_dict[key] = FrameworkData(input_data.sampling_frequency, channels)
             for channel in channels:
                 return_dict[key].input_data_on_channel(input_data.get_data_on_channel(channel), channel)
-        print(return_dict)
         return return_dict
 
     def _get_inputs(self) -> List[str]:
