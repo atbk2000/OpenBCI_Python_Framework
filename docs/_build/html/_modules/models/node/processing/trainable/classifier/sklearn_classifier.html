@@ -225,9 +225,8 @@
         <article role="main">
           <h1>Source code for models.node.processing.trainable.classifier.sklearn_classifier</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">abc</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Final</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Final</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Tuple</span>
 
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span>
 
 <span class="kn">from</span> <span class="nn">models.framework_data</span> <span class="kn">import</span> <span class="n">FrameworkData</span>
@@ -243,6 +242,8 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_MODULE_NAME</span><span class="p">:</span> <span class="n">Final</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;node.processing.trainable.classifier.sklearn_classifier&#39;</span>
 
+    <span class="n">OUTPUT_PROBABILITY</span><span class="p">:</span> <span class="n">Final</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;probability&#39;</span>
+
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">_initialize_parameter_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_initialize_parameter_fields</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
@@ -252,7 +253,7 @@
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_validate_parameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">_initialize_trainable_processor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_initialize_trainable_processor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">]:</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
@@ -267,8 +268,55 @@
     <span class="k">def</span> <span class="nf">_format_processed_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">processed_data</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">sampling_frequency</span><span class="p">:</span> <span class="nb">float</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FrameworkData</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">()</span>
 
+    <span class="k">def</span> <span class="nf">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">FrameworkData</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">FrameworkData</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; This method formats the raw data and then processes it. This is just a generic pipeline that should be used by all</span>
+<span class="sd">        nodes that extend this node. The developer must implement the ``_inner_process_data`` and ``_format_processed_data`` methods,</span>
+<span class="sd">        so that the data is processed and formatted according to the node needs.</span>
+
+<span class="sd">        :param data: The data to process.</span>
+<span class="sd">        :type data: dict(str, FrameworkData)</span>
+
+<span class="sd">        :return: The processed data.</span>
+<span class="sd">        :rtype: defined by the developer in the ``_format_processed_data`` method.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">raw_data</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_raw_data</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">INPUT_DATA</span><span class="p">])</span>
+        <span class="n">processed_data</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_inner_process_data</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+        <span class="n">class_probabilities</span><span class="p">:</span> <span class="n">Any</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_probability</span><span class="p">(</span><span class="n">raw_data</span><span class="p">)</span>
+        <span class="n">sampling_frequency</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">INPUT_DATA</span><span class="p">]</span><span class="o">.</span><span class="n">sampling_frequency</span>
+        <span class="k">return</span> <span class="p">{</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">OUTPUT_MAIN</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_processed_data</span><span class="p">(</span><span class="n">processed_data</span><span class="p">,</span> <span class="n">sampling_frequency</span><span class="p">),</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">OUTPUT_PROBABILITY</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_format_processed_data</span><span class="p">(</span><span class="n">class_probabilities</span><span class="p">,</span> <span class="n">sampling_frequency</span><span class="p">)</span>
+        <span class="p">}</span>
+
     <span class="k">def</span> <span class="nf">_inner_process_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sklearn_processor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+        <span class="n">data_shape</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="c1"># Reshape array into a 2D array for predict function</span>
+            <span class="n">nsamples</span> <span class="o">=</span> <span class="n">data_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">nx</span> <span class="o">=</span> <span class="n">data_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">ny</span> <span class="o">=</span> <span class="n">data_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nsamples</span><span class="p">,</span> <span class="n">nx</span><span class="o">*</span><span class="n">ny</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sklearn_processor</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_probability</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sklearn_processor</span><span class="p">,</span> <span class="s1">&#39;predict_proba&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="nb">callable</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sklearn_processor</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">)):</span>
+            <span class="k">return</span> <span class="p">[[]]</span>
+        
+        <span class="n">data_shape</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="c1"># Reshape array into a 2D array for predict_proba function</span>
+            <span class="n">nsamples</span> <span class="o">=</span> <span class="n">data_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">nx</span> <span class="o">=</span> <span class="n">data_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">ny</span> <span class="o">=</span> <span class="n">data_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nsamples</span><span class="p">,</span> <span class="n">nx</span><span class="o">*</span><span class="n">ny</span><span class="p">))</span>
+
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sklearn_processor</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_get_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="p">[</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">OUTPUT_MAIN</span><span class="p">,</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">OUTPUT_PROBABILITY</span>
+        <span class="p">]</span></div>
 </pre></div>
         </article>
       </div>

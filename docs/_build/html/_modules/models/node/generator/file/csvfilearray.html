@@ -246,7 +246,7 @@
 <span class="sd">    If you want to use this node in your pipeline, you must define the following parameters in the pipeline configuration.json file:</span>
 
 <span class="sd">        **name** (*str*): Node name.\n</span>
-<span class="sd">        **module** (*str*): Current module name (in this case ``models.node.generator.file.csvfilearray``).\n</span>
+<span class="sd">        **module** (*str*): Current module name (in this case ``models.node.generator.file``).\n</span>
 <span class="sd">        **type** (*str*): Current node type (in this case ``CSVFileArray``).\n</span>
 <span class="sd">        **file_path** (*List[str]*): List of paths to the CSV files.\n</span>
 <span class="sd">        **sampling_frequency** (*float*): The sample frequency used to collect the data in the CSV file.\n</span>
@@ -346,7 +346,6 @@
                 <span class="n">timestamp_data</span><span class="o">.</span><span class="n">input_data_on_channel</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="p">[</span><span class="n">row_timestamp</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_csv_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s1">&#39;closed&#39;</span><span class="p">)</span>
-
         <span class="k">return</span> <span class="p">{</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">OUTPUT_MAIN</span><span class="p">:</span> <span class="n">main_data</span><span class="p">,</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">OUTPUT_TIMESTAMP</span><span class="p">:</span> <span class="n">timestamp_data</span>

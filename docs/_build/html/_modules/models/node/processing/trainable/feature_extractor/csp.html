@@ -225,7 +225,7 @@
         <article role="main">
           <h1>Source code for models.node.processing.trainable.feature_extractor.csp</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">abc</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Final</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Final</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Tuple</span>
 
 <span class="kn">import</span> <span class="nn">mne.decoding</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -295,7 +295,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">number_of_components</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;number_of_components&#39;</span><span class="p">]</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_initialize_parameter_fields</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">_initialize_trainable_processor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_initialize_trainable_processor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; Initializes the trainable processor of this node. In this case it initializes the sklearn CSP processor.</span>
 
 <span class="sd">        :return: The initialized sklearn CSP processor.</span>

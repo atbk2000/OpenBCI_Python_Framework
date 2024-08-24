@@ -48,7 +48,7 @@ class Split(ProcessingNode):
 
     ``configuration.json`` usage:
         **module** (*str*): Current module name (in this case ``models.node.processing``).\n
-        **type** (*str*): Current node type (in this case ``Merge``).\n
+        **type** (*str*): Current node type (in this case ``Split``).\n
         **split** (*dict*): Dictionary for channel splitting. Given keys will be the node's outputs.
         Each key value must be a list of strings, containing existing input data channel names.\n
         **buffer_options** (*dict*): Buffer options:

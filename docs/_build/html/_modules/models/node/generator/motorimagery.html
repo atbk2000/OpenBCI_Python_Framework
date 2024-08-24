@@ -229,6 +229,7 @@
 <span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Final</span>
 
+<span class="kn">from</span> <span class="nn">models.exception.invalid_parameter_value</span> <span class="kn">import</span> <span class="n">InvalidParameterValue</span>
 <span class="kn">from</span> <span class="nn">models.exception.missing_parameter</span> <span class="kn">import</span> <span class="n">MissingParameterError</span>
 <span class="kn">from</span> <span class="nn">models.framework_data</span> <span class="kn">import</span> <span class="n">FrameworkData</span>
 <span class="kn">from</span> <span class="nn">models.node.generator.generator_node</span> <span class="kn">import</span> <span class="n">GeneratorNode</span>
@@ -280,11 +281,20 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_validate_parameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;trials&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">MissingParameterError</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="k">raise</span> <span class="n">MissingParameterError</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                                         <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;trials&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;shuffle_when_sequence_is_finished&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">MissingParameterError</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="k">raise</span> <span class="n">MissingParameterError</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                                         <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;shuffle_when_sequence_is_finished&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;max_sequence_runs&#39;</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;max_sequence_runs&#39;</span><span class="p">])</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">int</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">InvalidParameterValue</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                            <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;max_sequence_runs&#39;</span><span class="p">,</span>
+                                            <span class="n">cause</span><span class="o">=</span><span class="s1">&#39;must_be_int&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;max_sequence_runs&#39;</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">InvalidParameterValue</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                            <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;max_sequence_runs&#39;</span><span class="p">,</span>
+                                            <span class="n">cause</span><span class="o">=</span><span class="s1">&#39;must_be_greater_than_0&#39;</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_initialize_parameter_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Initializes the parameter fields of the node.</span>
@@ -295,6 +305,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_trial_to_call</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">shuffle_when_sequence_is_finished</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;shuffle_when_sequence_is_finished&#39;</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_thread</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_execute_trial</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_has_max_sequence_runs</span> <span class="o">=</span> <span class="s1">&#39;max_sequence_runs&#39;</span> <span class="ow">in</span> <span class="n">parameters</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_max_sequence_runs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_max_sequence_runs</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;max_sequence_runs&#39;</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sequence_runs_counter</span> <span class="o">=</span> <span class="mi">0</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_stop_execution</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_thread_started</span> <span class="o">=</span> <span class="kc">False</span>
 
@@ -368,6 +382,11 @@
     <span class="k">def</span> <span class="nf">_on_change_sequence</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Shuffle the generated data if necessary when the node finishes generating data for all the trials.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_has_max_sequence_runs</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_sequence_runs_counter</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sequence_runs_counter</span> <span class="o">&gt;=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_max_sequence_runs</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> Max sequence runs reached. Stopping Execution.&#39;</span><span class="p">)</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">shuffle_when_sequence_is_finished</span><span class="p">:</span>
             <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trials</span><span class="p">)</span>
 

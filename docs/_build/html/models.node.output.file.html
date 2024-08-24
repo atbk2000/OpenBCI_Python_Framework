@@ -245,11 +245,13 @@ INPUT_MAIN (str): The name of the main input (in this case, ‘main’).</p>
 <p><code class="docutils literal notranslate"><span class="pre">configuration.json</span></code> usage example:</p>
 <blockquote>
 <div><p><strong>module</strong>: Current module name (in this case <code class="docutils literal notranslate"><span class="pre">models.node.output.file</span></code>).</p>
-<p><strong>name</strong>: Current node instance name (in this case, <code class="docutils literal notranslate"><span class="pre">CSVFile</span></code>).</p>
+<p><strong>type</strong>: Current node instance name (in this case, <code class="docutils literal notranslate"><span class="pre">CSVFile</span></code>).</p>
 <p><strong>file_path</strong> (str): The path to the CSV file that will be created/written to.</p>
 <p><strong>buffer_options</strong> (dict): The buffer options.</p>
 <blockquote>
-<div><p><strong>clear_output_buffer_on_data_input</strong> (bool): Whether to clear the output buffer when data is inputted.</p>
+<div><p><strong>print_buffer_size</strong> (bool): Wether to print or not the buffer
+size.</p>
+<p><strong>clear_output_buffer_on_data_input</strong> (bool): Whether to clear the output buffer when data is inputted.</p>
 <p><strong>clear_input_buffer_after_process</strong> (bool): Whether to clear the input buffer after the process method is called.</p>
 <p><strong>clear_output_buffer_after_process</strong> (bool): Whether to clear the output buffer after the process method is called.</p>
 </div></blockquote>

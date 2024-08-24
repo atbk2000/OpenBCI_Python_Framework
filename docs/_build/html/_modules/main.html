@@ -5,7 +5,7 @@
     <meta name="color-scheme" content="light dark"><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" />
 
     <!-- Generated with Sphinx 6.1.3 and Furo 2023.03.27 -->
-        <title>Overview: module code - Open_BCI_Framework 0.0.1 documentation</title>
+        <title>main - Open_BCI_Framework 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -223,49 +223,59 @@
           </label>
         </div>
         <article role="main">
-          <h1>All modules for which code is available</h1>
-<ul><li><a href="application.html">application</a></li>
-<li><a href="main.html">main</a></li>
-<li><a href="models/exception/framework_base_exception.html">models.exception.framework_base_exception</a></li>
-<li><a href="models/exception/invalid_parameter_value.html">models.exception.invalid_parameter_value</a></li>
-<li><a href="models/exception/missing_parameter.html">models.exception.missing_parameter</a></li>
-<li><a href="models/exception/non_compatible_data.html">models.exception.non_compatible_data</a></li>
-<li><a href="models/framework_data.html">models.framework_data</a></li>
-<li><a href="models/node/generator/file/csvfile.html">models.node.generator.file.csvfile</a></li>
-<li><a href="models/node/generator/file/csvfilearray.html">models.node.generator.file.csvfilearray</a></li>
-<li><a href="models/node/generator/generator_node.html">models.node.generator.generator_node</a></li>
-<li><a href="models/node/generator/motorimagery.html">models.node.generator.motorimagery</a></li>
-<li><a href="models/node/generator/openbciboard.html">models.node.generator.openbciboard</a></li>
-<li><a href="models/node/generator/single_run_generator_node.html">models.node.generator.single_run_generator_node</a></li>
-<li><a href="models/node/node.html">models.node.node</a></li>
-<li><a href="models/node/output/device/serial/eletroestimuladoresp32.html">models.node.output.device.serial.eletroestimuladoresp32</a></li>
-<li><a href="models/node/output/device/serial/serial_output_node.html">models.node.output.device.serial.serial_output_node</a></li>
-<li><a href="models/node/output/display/simplegraph.html">models.node.output.display.simplegraph</a></li>
-<li><a href="models/node/output/file/csvfile.html">models.node.output.file.csvfile</a></li>
-<li><a href="models/node/output/output_node.html">models.node.output.output_node</a></li>
-<li><a href="models/node/processing/encoder/onehottosingle.html">models.node.processing.encoder.onehottosingle</a></li>
-<li><a href="models/node/processing/encoder/singletoonehot.html">models.node.processing.encoder.singletoonehot</a></li>
-<li><a href="models/node/processing/feature_extractor/feature_extractor.html">models.node.processing.feature_extractor.feature_extractor</a></li>
-<li><a href="models/node/processing/fill.html">models.node.processing.fill</a></li>
-<li><a href="models/node/processing/filter/bandpass.html">models.node.processing.filter.bandpass</a></li>
-<li><a href="models/node/processing/filter/filter.html">models.node.processing.filter.filter</a></li>
-<li><a href="models/node/processing/merge.html">models.node.processing.merge</a></li>
-<li><a href="models/node/processing/processing_node.html">models.node.processing.processing_node</a></li>
-<li><a href="models/node/processing/segmenter/fixedwindowsegmenter.html">models.node.processing.segmenter.fixedwindowsegmenter</a></li>
-<li><a href="models/node/processing/segmenter/segmenter.html">models.node.processing.segmenter.segmenter</a></li>
-<li><a href="models/node/processing/signalcheck.html">models.node.processing.signalcheck</a></li>
-<li><a href="models/node/processing/synchronize.html">models.node.processing.synchronize</a></li>
-<li><a href="models/node/processing/trainable/classifier/lda.html">models.node.processing.trainable.classifier.lda</a></li>
-<li><a href="models/node/processing/trainable/classifier/sklearn_classifier.html">models.node.processing.trainable.classifier.sklearn_classifier</a></li>
-<li><a href="models/node/processing/trainable/feature_extractor/csp.html">models.node.processing.trainable.feature_extractor.csp</a></li>
-<li><a href="models/node/processing/trainable/feature_extractor/sklearn_feature_extractor.html">models.node.processing.trainable.feature_extractor.sklearn_feature_extractor</a></li>
-<li><a href="models/node/processing/trainable/sklearn_compatible_trainable_node.html">models.node.processing.trainable.sklearn_compatible_trainable_node</a></li>
-<li><a href="models/node/processing/trainable/trainable_processing_node.html">models.node.processing.trainable.trainable_processing_node</a></li>
-<li><a href="models/utils/cue.html">models.utils.cue</a></li>
-<li><a href="models/utils/duration.html">models.utils.duration</a></li>
-<li><a href="models/utils/script_execution.html">models.utils.script_execution</a></li>
-<li><a href="models/utils/trial.html">models.utils.trial</a></li>
-</ul>
+          <h1>Source code for main</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">signal</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="kn">import</span> <span class="n">Thread</span>
+<span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span><span class="p">,</span> <span class="n">request</span>
+<span class="kn">from</span> <span class="nn">application</span> <span class="kn">import</span> <span class="n">Application</span>
+
+<span class="n">app</span> <span class="o">=</span> <span class="n">Flask</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
+<span class="n">application</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">interface_thread</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">stop</span><span class="p">())</span>
+<span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGTERM</span><span class="p">,</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">:</span> <span class="n">stop</span><span class="p">())</span>
+
+
+<div class="viewcode-block" id="run_app"><a class="viewcode-back" href="../main.html#main.run_app">[docs]</a><span class="k">def</span> <span class="nf">run_app</span><span class="p">(</span><span class="n">configuration</span><span class="p">):</span>
+    <span class="k">global</span> <span class="n">application</span>
+    <span class="n">application</span> <span class="o">=</span> <span class="n">Application</span><span class="p">(</span><span class="n">configuration</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="start"><a class="viewcode-back" href="../main.html#main.start">[docs]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/start&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">start</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">application</span>
+    <span class="k">global</span> <span class="n">interface_thread</span>
+    <span class="k">if</span> <span class="n">application</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;Application already running&#39;</span>
+    <span class="n">config</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">get_json</span><span class="p">()</span>
+    <span class="n">interface_thread</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">run_app</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">config</span><span class="p">,),</span> <span class="n">daemon</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">interface_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">return</span> <span class="s1">&#39;Application running&#39;</span></div>
+
+
+<div class="viewcode-block" id="stop"><a class="viewcode-back" href="../main.html#main.stop">[docs]</a><span class="nd">@app</span><span class="o">.</span><span class="n">route</span><span class="p">(</span><span class="s1">&#39;/stop&#39;</span><span class="p">,</span> <span class="n">methods</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">stop</span><span class="p">():</span>
+    <span class="k">global</span> <span class="n">application</span>
+    <span class="k">global</span> <span class="n">interface_thread</span>
+    <span class="k">if</span> <span class="n">application</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s1">&#39;No application running&#39;</span>
+
+    <span class="n">application</span><span class="o">.</span><span class="n">dispose</span><span class="p">()</span>
+    <span class="n">interface_thread</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+    <span class="k">return</span> <span class="s1">&#39;Application stopped&#39;</span></div>
+
+<span class="c1"># if __name__ == &#39;__main__&#39;:</span>
+<span class="c1">#     app.run(debug=True, host=&#39;127.0.0.1&#39;, port=8001)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">configuration_file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;config/configuration.json&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">config_data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">configuration_file</span><span class="p">)</span>
+    <span class="n">configuration_file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">Application</span><span class="p">(</span><span class="n">config_data</span><span class="p">)</span>
+</pre></div>
         </article>
       </div>
       <footer>

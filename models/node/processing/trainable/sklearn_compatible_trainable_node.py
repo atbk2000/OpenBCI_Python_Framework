@@ -145,8 +145,15 @@ class SKLearnCompatibleTrainableNode(TrainableProcessingNode):
         :rtype: ndarray
         """
         formatted_label = []
-        for epoch in raw_label.get_data_single_channel():
-            formatted_label.append(mode(epoch))
+        
+        data_single_channel = raw_label.get_data_single_channel()
+        # Check that epoch has more than one data
+        if(isinstance(data_single_channel[0], list)):
+            for epoch in data_single_channel:
+                formatted_label.append(mode(epoch))
+        else:
+            formatted_label = data_single_channel
+
         formatted_label = np.asarray(formatted_label)
         return formatted_label
 
@@ -188,9 +195,12 @@ class SKLearnCompatibleTrainableNode(TrainableProcessingNode):
         :return: The trained processor.
         :rtype: Any
         """
-        nsamples, nx, ny = data.shape
-        if nx > 2:
-            # Reshape the array into a 2D array for fit function
+        data_shape = data.shape
+        if len(data_shape) > 2:
+            # Reshape array into a 2D array for fit function
+            nsamples = data_shape[0]
+            nx = data_shape[1]
+            ny = data_shape[2]
             data = data.reshape((nsamples, nx*ny))
         return self.sklearn_processor.fit(data, label)
 

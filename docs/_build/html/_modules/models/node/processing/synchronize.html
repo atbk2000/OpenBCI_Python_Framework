@@ -171,7 +171,18 @@
 <li class="toctree-l5"><a class="reference internal" href="../../../../models.node.output.file.html">models.node.output.file package</a></li>
 </ul>
 </li>
-<li class="toctree-l4"><a class="reference internal" href="../../../../models.node.processing.html">models.node.processing package</a></li>
+<li class="toctree-l4 has-children"><a class="reference internal" href="../../../../models.node.processing.html">models.node.processing package</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l5"><a class="reference internal" href="../../../../models.node.processing.encoder.html">models.node.processing.encoder package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../models.node.processing.feature_extractor.html">models.node.processing.feature_extractor package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../models.node.processing.filter.html">models.node.processing.filter package</a></li>
+<li class="toctree-l5"><a class="reference internal" href="../../../../models.node.processing.segmenter.html">models.node.processing.segmenter package</a></li>
+<li class="toctree-l5 has-children"><a class="reference internal" href="../../../../models.node.processing.trainable.html">models.node.processing.trainable package</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l6"><a class="reference internal" href="../../../../models.node.processing.trainable.classifier.html">models.node.processing.trainable.classifier package</a></li>
+<li class="toctree-l6"><a class="reference internal" href="../../../../models.node.processing.trainable.feature_extractor.html">models.node.processing.trainable.feature_extractor package</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="../../../../models.utils.html">models.utils package</a></li>
@@ -218,7 +229,6 @@
 
 <span class="kn">from</span> <span class="nn">models.exception.invalid_parameter_value</span> <span class="kn">import</span> <span class="n">InvalidParameterValue</span>
 <span class="kn">from</span> <span class="nn">models.exception.missing_parameter</span> <span class="kn">import</span> <span class="n">MissingParameterError</span>
-<span class="kn">from</span> <span class="nn">models.exception.non_compatible_data</span> <span class="kn">import</span> <span class="n">NonCompatibleData</span>
 <span class="kn">from</span> <span class="nn">models.framework_data</span> <span class="kn">import</span> <span class="n">FrameworkData</span>
 <span class="kn">from</span> <span class="nn">models.node.processing.processing_node</span> <span class="kn">import</span> <span class="n">ProcessingNode</span>
 
@@ -236,16 +246,17 @@
     <span class="n">FILL_TYPE_SAMPLE_AND_HOLD</span><span class="p">:</span> <span class="n">Final</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;sample_and_hold&#39;</span>
 
     <span class="k">def</span> <span class="nf">_validate_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_validate_parameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;slave_filling&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">MissingParameterError</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="k">raise</span> <span class="n">MissingParameterError</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                                         <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;slave_filling&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;slave_filling&#39;</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">FILL_TYPE_ZEROFILL</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">FILL_TYPE_SAMPLE_AND_HOLD</span><span class="p">]:</span>
-            <span class="k">raise</span> <span class="n">InvalidParameterValue</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterValue</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                                         <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;slave_filling&#39;</span><span class="p">,</span>
                                         <span class="n">cause</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;not_in_[</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">FILL_TYPE_ZEROFILL</span><span class="si">}</span><span class="s1">,</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">FILL_TYPE_SAMPLE_AND_HOLD</span><span class="si">}</span><span class="s1">]&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;statistics_enabled&#39;</span> <span class="ow">in</span> <span class="n">parameters</span> <span class="ow">and</span> <span class="nb">type</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;statistics_enabled&#39;</span><span class="p">])</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">InvalidParameterValue</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterValue</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                                         <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;statistics_enabled&#39;</span><span class="p">,</span>
                                         <span class="n">cause</span><span class="o">=</span><span class="s1">&#39;must_be_bool&#39;</span><span class="p">)</span>
 
@@ -269,7 +280,6 @@
 
     <span class="k">def</span> <span class="nf">_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">FrameworkData</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">FrameworkData</span><span class="p">]:</span>
         <span class="n">lookup_start_index</span> <span class="o">=</span> <span class="mi">0</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Starting sync&#39;</span><span class="p">)</span>
         <span class="c1"># master_main = data[self.INPUT_MASTER_MAIN]</span>
         <span class="n">master_timestamp_data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">INPUT_MASTER_TIMESTAMP</span><span class="p">]</span><span class="o">.</span><span class="n">get_data_single_channel</span><span class="p">()</span>
         <span class="n">slave_main</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">INPUT_SLAVE_MAIN</span><span class="p">]</span>
@@ -354,10 +364,12 @@
                 <span class="n">channel_data</span> <span class="o">=</span> <span class="p">[</span><span class="n">input_data</span><span class="p">[</span><span class="n">channel</span><span class="p">]]</span> <span class="o">*</span> <span class="n">fill_size</span>
                 <span class="n">fill_data</span><span class="o">.</span><span class="n">input_data_on_channel</span><span class="p">(</span><span class="n">channel_data</span><span class="p">,</span> <span class="n">channel</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">InvalidParameterValue</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterValue</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                                         <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;slave_filling&#39;</span><span class="p">,</span>
                                         <span class="n">cause</span><span class="o">=</span><span class="s1">&#39;not_set&#39;</span><span class="p">)</span>
-
+        <span class="k">if</span> <span class="n">fill_data</span><span class="o">.</span><span class="n">get_data_count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">start_index</span> <span class="o">==</span> <span class="n">end_index</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="n">fill_data</span><span class="o">.</span><span class="n">channels</span><span class="p">:</span>
+                <span class="n">fill_data</span><span class="o">.</span><span class="n">input_data_on_channel</span><span class="p">([</span><span class="n">slave_main</span><span class="o">.</span><span class="n">get_data_on_channel</span><span class="p">(</span><span class="n">channel</span><span class="p">)[</span><span class="mi">0</span><span class="p">]],</span> <span class="n">channel</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">fill_data</span></div>
 </pre></div>
         </article>
