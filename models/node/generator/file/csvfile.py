@@ -127,7 +127,7 @@ class CSVFile(SingleRunGeneratorNode):
             if row_index == 0 and self.channel_column_names is None:
                 self.channel_column_names = row.keys()
             for channel_name in self.channel_column_names:
-                main_data.input_data_on_channel([float(row[channel_name])], channel_name)
+                main_data.input_data_on_channel([row[channel_name]], channel_name)
             row_timestamp = row_index if self._should_generate_timestamp() else row[self.timestamp_column_name]
             timestamp_data.input_data_on_channel(data=[row_timestamp])
         self._csv_file.close()

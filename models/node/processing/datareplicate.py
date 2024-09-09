@@ -16,7 +16,7 @@ class DataReplicate(ProcessingNode):
         OUTPUT_MAIN (str): The name of the main output (in this case ``main``)
 
     configuration.json usage:
-        **module** (*str*): The name of the module (``node.processing.data_replicate``)\n
+        **module** (*str*): The name of the module (``models.node.processing``)\n
         **type** (*str*): The name of the class (``DataReplicate``)\n
         **data_repetition_count** (*int*): Number of times that the data in the input buffer must be repeated.\n
         **use_extra_data** (*bool*): Whether to use extra data when replicating.\n
