@@ -8,70 +8,8 @@
         "enable_log": true,
         "file_path":
         [
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj1_series1_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj1_series2_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj1_series3_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj1_series4_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj1_series5_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj1_series6_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj1_series7_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj1_series8_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj2_series1_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj2_series2_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj2_series3_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj2_series4_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj2_series5_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj2_series6_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj2_series7_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj2_series8_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj3_series1_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj3_series2_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj3_series3_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj3_series4_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj3_series5_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj3_series6_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj3_series7_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj3_series8_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj4_series1_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj4_series2_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj4_series3_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj4_series4_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj4_series5_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj4_series6_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj4_series7_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj4_series8_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj5_series1_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj5_series2_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj5_series3_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj5_series4_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj5_series5_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj5_series6_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj5_series7_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj5_series8_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj6_series1_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj6_series2_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj6_series3_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj6_series4_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj6_series5_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj6_series6_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj6_series7_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj6_series8_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj7_series1_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj7_series2_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj7_series3_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj7_series4_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj7_series5_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj7_series6_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj7_series7_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj7_series8_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj8_series1_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj8_series2_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj8_series3_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj8_series4_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj8_series5_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj8_series6_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj8_series7_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj8_series8_data.csv"
+          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\test\\subj2_series9_data.csv",
+          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\test\\subj2_series10_data.csv"
         ],
         "data_type": "float",
         "sampling_frequency": 500,
@@ -122,101 +60,6 @@
           ],
           "timestamp": []
         }
-      },
-      "events": {
-        "name": "csv_events",
-        "module": "models.node.generator.file",
-        "type": "CSVFileArray",
-        "enable_log": true,
-        "file_path": [
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj1_series1_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj1_series2_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj1_series3_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj1_series4_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj1_series5_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj1_series6_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj1_series7_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj1_series8_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj2_series1_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj2_series2_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj2_series3_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj2_series4_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj2_series5_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj2_series6_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj2_series7_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj2_series8_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj3_series1_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj3_series2_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj3_series3_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj3_series4_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj3_series5_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj3_series6_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj3_series7_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj3_series8_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj4_series1_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj4_series2_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj4_series3_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj4_series4_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj4_series5_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj4_series6_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj4_series7_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj4_series8_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj5_series1_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj5_series2_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj5_series3_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj5_series4_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj5_series5_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj5_series6_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj5_series7_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj5_series8_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj6_series1_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj6_series2_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj6_series3_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj6_series4_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj6_series5_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj6_series6_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj6_series7_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj6_series8_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj7_series1_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj7_series2_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj7_series3_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj7_series4_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj7_series5_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj7_series6_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj7_series7_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj7_series8_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj8_series1_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj8_series2_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj8_series3_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj8_series4_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj8_series5_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj8_series6_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj8_series7_events.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\train\\subj8_series8_events.csv"
-
-        ],
-        "sampling_frequency": 500,
-        "channel_column_names": [
-          "HandStart",
-          "FirstDigitTouch",
-          "BothStartLoadPhase",
-          "LiftOff",
-          "Replace",
-          "BothReleased"
-        ],
-        "buffer_options": {
-          "clear_output_buffer_on_generate": true,
-          "print_buffer_size": false
-        },
-        "outputs": {
-          "main": [
-            {
-              "node": "events_encoder",
-              "input": "main"
-            }
-          ],
-          "timestamp": []
-        }
       }
     },
     "common": {
@@ -228,7 +71,7 @@
         "filling_value": "latest",
         "buffer_options": {
           "clear_output_buffer_on_data_input": true,
-          "clear_input_buffer_after_process": true,
+          "clear_input_buffer_after_process": false,
           "clear_output_buffer_after_process": true
         },
         "outputs":{
@@ -240,72 +83,98 @@
           ]
         }
       },
-      "events_encoder": {
-        "module": "models.node.processing.encoder",
-        "type": "OneHotToSingle",
-        "enable_log": true,
-        "buffer_options": {
-          "clear_output_buffer_on_data_input": false,
-          "clear_input_buffer_after_process": true,
-          "clear_output_buffer_after_process": true,
-          "print_buffer_size": false
-        },
-        "outputs": {
-          "main": [
-            {
-              "node": "events_segmenter",
-              "input": "main"
-            }
-          ]
-        }
-      },
-      "events_segmenter": {
-        "module": "models.node.processing.segmenter",
-        "type": "FixedWindowSegmenter",
-        "enable_log": true,
-        "window_size": 75,
-        "filling_value": "latest",
-        "buffer_options": {
-          "clear_output_buffer_on_data_input": true,
-          "clear_input_buffer_after_process": true,
-          "clear_output_buffer_after_process": true
-        },
-        "outputs":{
-          "main": [
-            {
-              "node": "lda",
-              "input": "label"
-            }
-          ]
-        }
-      },
       "lda": {
         "module": "models.node.processing.trainable.classifier",
         "type": "LDA",
         "enable_log": true,
-        "training_set_size": 25,
-        "save_after_training": true,
+        "training_set_size": 3974,
+        "save_after_training": false,
         "save_file_path":
-        "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\lda_classifier_1.csv",
-        "load_trained": false,
+        "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\subj2_classifier.csv",
+        "load_trained": true,
         "load_file_path":
-        "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\lda_classifier_1.csv",
+        "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\subj2_classifier.csv",
         "buffer_options": {
-          "clear_output_buffer_on_data_input": false,
+          "clear_output_buffer_on_data_input": true,
           "clear_input_buffer_after_process": true,
           "clear_output_buffer_after_process": true,
-          "clear_input_buffer_after_training": false,
+          "clear_input_buffer_after_training": true,
           "process_input_buffer_after_training": true,
           "print_buffer_size": false
         },
         "outputs": {
           "main": [],
-          "probability": []
+          "probability": [
+            {
+            "node": "interpolate",
+            "input": "main"
+            }
+          ]
         }
+      },
+      "interpolate": {
+        "module": "models.node.processing",
+        "type": "Interpolate",
+        "enable_log": true,
+        "repetition_count": 75,
+        "use_extra_data": true,
+        "extra_data": 35,
+        "buffer_options": {
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true,
+          "print_buffer_size": false
+        },
+        "outputs": {
+          "main": [
+            {
+              "node": "csv_out",
+              "input": "main"
+            }
+          ]
+        }
+      },
+      "csv_out": {
+        "module": "models.node.output.file",
+        "type": "CSVFile",
+        "enable_log": true,
+        "file_path": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\subj2_estimated.csv",
+        "buffer_options": {
+          "print_buffer_size": false
+        },
+        "outputs": {}
       }
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
