@@ -8,8 +8,7 @@
         "enable_log": true,
         "file_path":
         [
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\test\\subj2_series9_data.csv",
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\test\\subj2_series10_data.csv"
+          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\series\\subj1_series8_data.csv"
         ],
         "data_type": "float",
         "sampling_frequency": 500,
@@ -87,13 +86,13 @@
         "module": "models.node.processing.trainable.classifier",
         "type": "LDA",
         "enable_log": true,
-        "training_set_size": 3974,
+        "training_set_size": 17400,
         "save_after_training": false,
         "save_file_path":
-        "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\subj2_classifier.csv",
+        "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\subj1_classifier.csv",
         "load_trained": true,
         "load_file_path":
-        "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\subj2_classifier.csv",
+        "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\subj1_classifier.csv",
         "buffer_options": {
           "clear_output_buffer_on_data_input": true,
           "clear_input_buffer_after_process": true,
@@ -103,22 +102,27 @@
           "print_buffer_size": false
         },
         "outputs": {
-          "main": [],
+          "main": [
+            {
+              "node": "interpolate_events",
+              "input": "main"
+            }
+          ],
           "probability": [
             {
-            "node": "interpolate",
+            "node": "interpolate_probabilities",
             "input": "main"
             }
           ]
         }
       },
-      "interpolate": {
+      "interpolate_probabilities": {
         "module": "models.node.processing",
         "type": "Interpolate",
         "enable_log": true,
         "repetition_count": 75,
         "use_extra_data": true,
-        "extra_data": 35,
+        "extra_data": 33,
         "buffer_options": {
           "clear_output_buffer_on_data_input": true,
           "clear_input_buffer_after_process": true,
@@ -128,17 +132,49 @@
         "outputs": {
           "main": [
             {
-              "node": "csv_out",
+              "node": "probabilities",
               "input": "main"
             }
           ]
         }
       },
-      "csv_out": {
+      "interpolate_events": {
+        "module": "models.node.processing",
+        "type": "Interpolate",
+        "enable_log": true,
+        "repetition_count": 75,
+        "use_extra_data": true,
+        "extra_data": 33,
+        "buffer_options": {
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true,
+          "print_buffer_size": false
+        },
+        "outputs": {
+          "main": [
+            {
+              "node": "events_estimated",
+              "input": "main"
+            }
+          ]
+        }
+      },
+      "probabilities": {
         "module": "models.node.output.file",
         "type": "CSVFile",
         "enable_log": true,
-        "file_path": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\subj2_estimated.csv",
+        "file_path": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\subj1_probabilities.csv",
+        "buffer_options": {
+          "print_buffer_size": false
+        },
+        "outputs": {}
+      },
+      "events_estimated": {
+        "module": "models.node.output.file",
+        "type": "CSVFile",
+        "enable_log": true,
+        "file_path": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\subj1_events_estimated.csv",
         "buffer_options": {
           "print_buffer_size": false
         },
@@ -147,25 +183,6 @@
     }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
