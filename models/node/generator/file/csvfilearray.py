@@ -20,7 +20,7 @@ class CSVFileArray(SingleRunGeneratorNode):
     If you want to use this node in your pipeline, you must define the following parameters in the pipeline configuration.json file:
 
         **name** (*str*): Node name.\n
-        **module** (*str*): Current module name (in this case ``models.node.generator.file.csvfilearray``).\n
+        **module** (*str*): Current module name (in this case ``models.node.generator.file``).\n
         **type** (*str*): Current node type (in this case ``CSVFileArray``).\n
         **file_path** (*List[str]*): List of paths to the CSV files.\n
         **sampling_frequency** (*float*): The sample frequency used to collect the data in the CSV file.\n
@@ -106,7 +106,10 @@ class CSVFileArray(SingleRunGeneratorNode):
 
     def _generate_data(self) -> Dict[str, FrameworkData]:
         main_data = FrameworkData(self.sampling_frequency, self.channel_column_names)
-        timestamp_data = FrameworkData(self.sampling_frequency)
+        if self._should_generate_timestamp():
+            timestamp_data = FrameworkData(self.sampling_frequency)
+        else:
+            timestamp_data = FrameworkData(self.sampling_frequency, [self.timestamp_column_name])
         for file in self.file_paths:
             self._csv_file = open(file)
             self.print(f'{file} opened')
@@ -120,7 +123,6 @@ class CSVFileArray(SingleRunGeneratorNode):
                 timestamp_data.input_data_on_channel(data=[row_timestamp])
             self._csv_file.close()
             self.print('closed')
-
         return {
             self.OUTPUT_MAIN: main_data,
             self.OUTPUT_TIMESTAMP: timestamp_data

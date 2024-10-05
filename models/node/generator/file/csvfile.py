@@ -19,7 +19,7 @@ class CSVFile(SingleRunGeneratorNode):
     If you want to use this node in your pipeline, you must define the following parameters in the pipeline configuration.json file:
 
         **name** (*str*): Node name.\n
-        **module** (*str*): Current module name (in this case ``models.node.generator.file.csvfile``).\n
+        **module** (*str*): Current module name (in this case ``models.node.generator.file``).\n
         **type** (*str*): Current node type (in this case ``CSVFile``).\n
         **file_path** (*str*): Path to the CSV file.\n
         **sampling_frequency** (*float*): The sample frequency used to collect the data in the CSV file.\n
@@ -127,7 +127,7 @@ class CSVFile(SingleRunGeneratorNode):
             if row_index == 0 and self.channel_column_names is None:
                 self.channel_column_names = row.keys()
             for channel_name in self.channel_column_names:
-                main_data.input_data_on_channel([float(row[channel_name])], channel_name)
+                main_data.input_data_on_channel([row[channel_name]], channel_name)
             row_timestamp = row_index if self._should_generate_timestamp() else row[self.timestamp_column_name]
             timestamp_data.input_data_on_channel(data=[row_timestamp])
         self._csv_file.close()

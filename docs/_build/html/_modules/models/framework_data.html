@@ -320,6 +320,28 @@
         <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">channel</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
 
+<div class="viewcode-block" id="FrameworkData.rename_channel"><a class="viewcode-back" href="../../models.html#models.framework_data.FrameworkData.rename_channel">[docs]</a>    <span class="k">def</span> <span class="nf">rename_channel</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">current_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">new_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;This method is used to rename a given channel stored in ``FrameworkData``.</span>
+
+<span class="sd">        :param current_name: Existing channel key</span>
+<span class="sd">        :param new_name: Key to replace existing channel key</span>
+
+<span class="sd">        :return: None</span>
+<span class="sd">        :rtype: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">current_name</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterValue</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span>
+                                        <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;current_name&#39;</span><span class="p">,</span>
+                                        <span class="n">cause</span><span class="o">=</span><span class="s1">&#39;must_be_existing_key&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">new_name</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterValue</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span>
+                                        <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;new_name&#39;</span><span class="p">,</span>
+                                        <span class="n">cause</span><span class="o">=</span><span class="s1">&#39;must_be_non_existing_key&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">new_name</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">current_name</span><span class="p">]</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">current_name</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">current_name</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_name</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="FrameworkData.get_data_count"><a class="viewcode-back" href="../../models.html#models.framework_data.FrameworkData.get_data_count">[docs]</a>    <span class="k">def</span> <span class="nf">get_data_count</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;This method is used to get the number of data points that are stored in the</span>
 <span class="sd">        ``FrameworkData`` object. This is normally used to check that the data that is input is</span>
@@ -377,7 +399,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">sampling_frequency</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sampling_frequency</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_init_data_dictionary</span><span class="p">()</span>
 
-        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampling_frequency</span> <span class="o">!=</span> <span class="n">data</span><span class="o">.</span><span class="n">sampling_frequency</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampling_frequency</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">data</span><span class="o">.</span><span class="n">sampling_frequency</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">sampling_frequency</span> <span class="o">!=</span> <span class="n">data</span><span class="o">.</span><span class="n">sampling_frequency</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">NonCompatibleData</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;framework_data&#39;</span><span class="p">)</span>
         <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_channels_as_set</span><span class="p">()</span> <span class="o">!=</span> <span class="n">data</span><span class="o">.</span><span class="n">get_channels_as_set</span><span class="p">():</span>
             <span class="k">raise</span> <span class="n">NonCompatibleData</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">&#39;framework_data&#39;</span><span class="p">)</span>
@@ -552,7 +574,23 @@
 <span class="sd">        :return: ``True`` if the ``FrameworkData`` object has data stored in it on only one channel, otherwise ``False``.</span>
 <span class="sd">        :rtype: bool</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span></div></div>
+        <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span></div>
+
+<div class="viewcode-block" id="FrameworkData.splice"><a class="viewcode-back" href="../../models.html#models.framework_data.FrameworkData.splice">[docs]</a>    <span class="k">def</span> <span class="nf">splice</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">start_index</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">count</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">FrameworkData</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;This method is used remove a given number of data points from a starting index and returns the removed items.</span>
+
+<span class="sd">        :param start_index: index of removal start</span>
+<span class="sd">        :param count: number of data points to be removed</span>
+
+<span class="sd">        :return: ``FrameworkData`` with all original channels, and removed data.</span>
+<span class="sd">        :rtype: FrameworkData</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">return_value</span><span class="p">:</span> <span class="n">FrameworkData</span> <span class="o">=</span> <span class="n">FrameworkData</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sampling_frequency</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">)</span>
+        <span class="n">end_index</span> <span class="o">=</span> <span class="n">start_index</span> <span class="o">+</span> <span class="n">count</span>
+        <span class="k">for</span> <span class="n">channel</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">channels</span><span class="p">:</span>
+            <span class="n">return_value</span><span class="o">.</span><span class="n">input_data_on_channel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">channel</span><span class="p">][</span><span class="n">start_index</span><span class="p">:</span><span class="n">end_index</span><span class="p">],</span> <span class="n">channel</span><span class="p">)</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">[</span><span class="n">channel</span><span class="p">][</span><span class="n">start_index</span><span class="p">:</span><span class="n">end_index</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">return_value</span></div></div>
 </pre></div>
         </article>
       </div>

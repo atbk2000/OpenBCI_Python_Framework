@@ -18,9 +18,11 @@ class CSVFile(OutputNode):
     ``configuration.json`` usage example:
 
         **module**: Current module name (in this case ``models.node.output.file``).\n
-        **name**: Current node instance name (in this case, ``CSVFile``).\n
+        **type**: Current node instance name (in this case, ``CSVFile``).\n
         **file_path** (str): The path to the CSV file that will be created/written to.\n
         **buffer_options** (dict): The buffer options.\n
+            **print_buffer_size** (bool): Wether to print or not the buffer
+            size.\n
             **clear_output_buffer_on_data_input** (bool): Whether to clear the output buffer when data is inputted.\n
             **clear_input_buffer_after_process** (bool): Whether to clear the input buffer after the process method is called.\n
             **clear_output_buffer_after_process** (bool): Whether to clear the output buffer after the process method is called.\n

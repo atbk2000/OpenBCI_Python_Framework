@@ -288,6 +288,7 @@
 <li class="toctree-l2"><a class="reference internal" href="models.node.html#module-models.node.node">models.node.node module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="models.node.html#models.node.node.Node"><code class="docutils literal notranslate"><span class="pre">Node</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="models.node.html#models.node.node.Node.add_child"><code class="docutils literal notranslate"><span class="pre">Node.add_child()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="models.node.html#models.node.node.Node.build_graphviz_representation"><code class="docutils literal notranslate"><span class="pre">Node.build_graphviz_representation()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="models.node.html#models.node.node.Node.check_input"><code class="docutils literal notranslate"><span class="pre">Node.check_input()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="models.node.html#models.node.node.Node.check_output"><code class="docutils literal notranslate"><span class="pre">Node.check_output()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="models.node.html#models.node.node.Node.dispose"><code class="docutils literal notranslate"><span class="pre">Node.dispose()</span></code></a></li>
@@ -633,6 +634,46 @@ one channel.</p>
 </dl>
 </dd></dl>
 
+<dl class="py method">
+<dt class="sig sig-object py" id="models.framework_data.FrameworkData.rename_channel">
+<span class="sig-name descname"><span class="pre">rename_channel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">current_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">new_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/framework_data.html#FrameworkData.rename_channel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.framework_data.FrameworkData.rename_channel" title="Permalink to this definition">#</a></dt>
+<dd><p>This method is used to rename a given channel stored in <code class="docutils literal notranslate"><span class="pre">FrameworkData</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>current_name</strong> – Existing channel key</p></li>
+<li><p><strong>new_name</strong> – Key to replace existing channel key</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.framework_data.FrameworkData.splice">
+<span class="sig-name descname"><span class="pre">splice</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#models.framework_data.FrameworkData" title="models.framework_data.FrameworkData"><span class="pre">FrameworkData</span></a></span></span><a class="reference internal" href="_modules/models/framework_data.html#FrameworkData.splice"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.framework_data.FrameworkData.splice" title="Permalink to this definition">#</a></dt>
+<dd><p>This method is used remove a given number of data points from a starting index and returns the removed items.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_index</strong> – index of removal start</p></li>
+<li><p><strong>count</strong> – number of data points to be removed</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">FrameworkData</span></code> with all original channels, and removed data.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#models.framework_data.FrameworkData" title="models.framework_data.FrameworkData">FrameworkData</a></p>
+</dd>
+</dl>
+</dd></dl>
+
 </dd></dl>
 
 </section>
@@ -715,6 +756,8 @@ one channel.</p>
 <li><a class="reference internal" href="#models.framework_data.FrameworkData.input_2d_data"><code class="docutils literal notranslate"><span class="pre">FrameworkData.input_2d_data()</span></code></a></li>
 <li><a class="reference internal" href="#models.framework_data.FrameworkData.input_data_on_channel"><code class="docutils literal notranslate"><span class="pre">FrameworkData.input_data_on_channel()</span></code></a></li>
 <li><a class="reference internal" href="#models.framework_data.FrameworkData.is_1d"><code class="docutils literal notranslate"><span class="pre">FrameworkData.is_1d()</span></code></a></li>
+<li><a class="reference internal" href="#models.framework_data.FrameworkData.rename_channel"><code class="docutils literal notranslate"><span class="pre">FrameworkData.rename_channel()</span></code></a></li>
+<li><a class="reference internal" href="#models.framework_data.FrameworkData.splice"><code class="docutils literal notranslate"><span class="pre">FrameworkData.splice()</span></code></a></li>
 </ul>
 </li>
 </ul>

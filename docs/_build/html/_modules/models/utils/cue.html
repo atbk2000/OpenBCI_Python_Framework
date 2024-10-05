@@ -251,15 +251,17 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">_MODULE_NAME</span><span class="p">:</span> <span class="n">Final</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;utils.cue&#39;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">function</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Constructor method. Initializes and validates the parameters of the class.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">function</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="n">MissingParameterError</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+            <span class="k">raise</span> <span class="n">MissingParameterError</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span>
+                                        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;cue&#39;</span><span class="p">,</span>
                                         <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;function&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">parameters</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">parameters</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_filename</span> <span class="o">=</span> <span class="n">filename</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_function</span> <span class="o">=</span> <span class="n">function</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_function_parameters</span> <span class="o">=</span> <span class="n">parameters</span>
 
@@ -269,6 +271,7 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s1">&#39;file&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MissingParameterError</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">cls</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span>
+                                        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;cue&#39;</span><span class="p">,</span>
                                         <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;file&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;parameters&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
             <span class="n">cue_parameters</span> <span class="o">=</span> <span class="p">{}</span>
@@ -280,6 +283,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span>
                 <span class="s1">&#39;session.trial.cue.custom_cue.not.defined.in.script.</span><span class="si">%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">cue_function_path</span><span class="p">)</span>
         <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span>
+            <span class="n">filename</span><span class="o">=</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;file&#39;</span><span class="p">],</span>
             <span class="n">function</span><span class="o">=</span><span class="n">_locals</span><span class="p">[</span><span class="s1">&#39;custom_cue&#39;</span><span class="p">],</span>
             <span class="n">parameters</span><span class="o">=</span><span class="n">cue_parameters</span>
         <span class="p">)</span></div>
@@ -287,7 +291,10 @@
 <div class="viewcode-block" id="Cue.execute"><a class="viewcode-back" href="../../../models.utils.html#models.utils.cue.Cue.execute">[docs]</a>    <span class="k">def</span> <span class="nf">execute</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Executes the cue function with the parameters that were passed to it.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_function</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_function_parameters</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_function</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_function_parameters</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s1">&#39;{&#39;</span> <span class="o">+</span> <span class="sa">f</span><span class="s1">&#39;&quot;file&quot;:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_filename</span><span class="si">}</span><span class="s1">,&quot;parameters&quot;:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_function_parameters</span><span class="si">}</span><span class="s1">&#39;</span> <span class="o">+</span> <span class="s1">&#39;}&#39;</span></div>
 </pre></div>
         </article>
       </div>

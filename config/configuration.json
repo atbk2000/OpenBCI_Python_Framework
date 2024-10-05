@@ -1,230 +1,79 @@
 {
   "nodes": {
     "root": {
-      "open_bci": {
-        "module": "models.node.generator",
-        "type": "OpenBCIBoard",
-        "log_level": "TRACE",
-        "board": "SYNTHETIC_BOARD",
-        "communication": {
-          "serial_port": "COM4"
-        },
-        "buffer_options": {
-          "clear_output_buffer_on_generate": true
-        },
-        "outputs": {
-          "eeg": [
-            {
-              "node": "merge",
-              "input": "master_main"
-            }
-          ],
-          "accelerometer": [],
-          "timestamp": [
-            {
-              "node": "merge",
-              "input": "master_timestamp"
-            }
-          ]
-        }
-      },
-      "motor_imagery_session": {
-        "module": "models.node.generator",
-        "type": "MotorImagery",
-        "buffer_options": {
-          "clear_output_buffer_on_generate": true
-        },
-        "shuffle_when_sequence_is_finished": true,
-        "trials": [
-          {
-            "name": "Rest",
-            "code": 1,
-            "duration": {
-              "mean": 0.5,
-              "standard_deviation": 1,
-              "maximum": 1,
-              "minimum": 0.2
-            },
-            "cue": {
-              "file": "D:\\Desktop\\Projetos\\Pessoal\\Mestrado\\OpenBCI_Python_Framework\\cues\\console_print.py",
-              "parameters": {
-                "message": "REST"
-              }
-            }
-          },
-          {
-            "name": "Close right fist",
-            "code": 3,
-            "duration": {
-              "mean": 0.5,
-              "standard_deviation": 1,
-              "maximum": 1,
-              "minimum": 0.2
-            },
-            "cue": {
-              "file": "D:\\Desktop\\Projetos\\Pessoal\\Mestrado\\OpenBCI_Python_Framework\\cues\\console_print.py",
-              "parameters": {
-                "message": "CLOSE RIGHT FIST"
-              }
-            }
-          },
-          {
-            "name": "Rest",
-            "code": 1,
-            "duration": {
-              "mean": 0.5,
-              "standard_deviation": 1,
-              "maximum": 1,
-              "minimum": 0.2
-            },
-            "cue": {
-              "file": "D:\\Desktop\\Projetos\\Pessoal\\Mestrado\\OpenBCI_Python_Framework\\cues\\console_print.py",
-              "parameters": {
-                "message": "REST"
-              }
-            }
-          },
-          {
-            "name": "Close left fist",
-            "code": 2,
-            "duration": {
-              "mean": 0.5,
-              "standard_deviation": 1,
-              "maximum": 1,
-              "minimum": 0.2
-            },
-            "cue": {
-              "file": "D:\\Desktop\\Projetos\\Pessoal\\Mestrado\\OpenBCI_Python_Framework\\cues\\console_print.py",
-              "parameters": {
-                "message": "CLOSE LEFT FIST"
-              }
-            }
-          }
+      "data": {
+        "name": "csv_data",
+        "module": "models.node.generator.file",
+        "type": "CSVFileArray",
+        "enable_log": true,
+        "file_path":
+        [
+          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\series\\subj1_series8_data.csv"
         ],
-        "outputs": {
-          "marker": [
-            {
-              "node": "rename",
-              "input": "main"
-            }
+        "data_type": "float",
+        "sampling_frequency": 500,
+        "channel_column_names": [
+          "Fp1",
+          "Fp2",
+          "F7",
+          "F3",
+          "Fz",
+          "F4",
+          "F8",
+          "FC5",
+          "FC1",
+          "FC2",
+          "FC6",
+          "T7",
+          "C3",
+          "Cz",
+          "C4",
+          "T8",
+          "TP9",
+          "CP5",
+          "CP1",
+          "CP2",
+          "CP6",
+          "TP10",
+          "P7",
+          "P3",
+          "Pz",
+          "P4",
+          "P8",
+          "PO9",
+          "O1",
+          "Oz",
+          "O2",
+          "PO10"
           ],
-          "timestamp": [
-            {
-              "node": "merge",
-              "input": "slave_timestamp"
-            }
-          ]
-        }
-      }
-    },
-    "common": {
-      "rename": {
-        "module": "models.node.processing",
-        "type": "ChannelRename",
-        "dictionary": {
-          "main": "marker"
-        },
-        "buffer_options": {
-          "clear_output_buffer_on_data_input": true,
-          "clear_input_buffer_after_process": true,
-          "clear_output_buffer_after_process": true
+        "buffer_options":{
+          "clear_output_buffer_on_generate": true,
+          "print_buffer_size": false
         },
         "outputs": {
           "main": [
-            {
-              "node": "merge",
-              "input": "slave_main"
-            }
-          ]
-        }
-      },
-      "merge": {
-        "module": "models.node.processing",
-        "type": "Merge",
-        "slave_filling": "sample_and_hold",
-        "buffer_options": {
-          "clear_output_buffer_on_data_input": true,
-          "clear_input_buffer_after_process": true,
-          "clear_output_buffer_after_process": true
-        },
-        "outputs": {
-          "merged_main": [
             {
               "node": "segmenter",
               "input": "main"
             }
           ],
-          "merged_timestamp": []
+          "timestamp": []
         }
-      },
+      }
+    },
+    "common": {
       "segmenter": {
         "module": "models.node.processing.segmenter",
         "type": "FixedWindowSegmenter",
-        "window_size": 1000,
+        "enable_log": true,
+        "window_size": 75,
         "filling_value": "latest",
         "buffer_options": {
           "clear_output_buffer_on_data_input": true,
           "clear_input_buffer_after_process": false,
           "clear_output_buffer_after_process": true
         },
-        "outputs": {
-          "main": [
-            {
-              "node": "split",
-              "input": "main"
-            }
-          ]
-        }
-      },
-      "split": {
-        "module": "models.node.processing",
-        "type": "Split",
-        "split": {
-          "data": [
-            "Fz"
-          ],
-          "label": [
-            "marker"
-          ]
-        },
-        "buffer_options": {
-          "clear_output_buffer_on_data_input": true,
-          "clear_input_buffer_after_process": true,
-          "clear_output_buffer_after_process": true
-        },
-        "outputs": {
-          "data": [
-            {
-              "node": "csp",
-              "input": "data"
-            }
-          ],
-          "label": [
-            {
-              "node": "csp",
-              "input": "label"
-            }
-          ]
-        }
-      },
-      "csp": {
-        "module": "models.node.processing.trainable.feature_extractor",
-        "type": "CSP",
-        "number_of_components": 4,
-        "training_set_size": 5,
-        "save_after_training": true,
-        "save_file_path": "D:\\Desktop\\A\\csp",
-        "load_trained": false,
-        "enable_log": true,
-        "buffer_options": {
-          "print_buffer_size": true,
-          "clear_output_buffer_on_data_input": true,
-          "clear_input_buffer_after_process": true,
-          "clear_output_buffer_after_process": true,
-          "clear_input_buffer_after_training": true,
-          "process_input_buffer_after_training": true
-        },
-        "outputs": {
+        "outputs":{
           "main": [
             {
               "node": "lda",
@@ -236,21 +85,117 @@
       "lda": {
         "module": "models.node.processing.trainable.classifier",
         "type": "LDA",
-        "training_set_size": 25,
+        "enable_log": true,
+        "training_set_size": 17400,
         "save_after_training": false,
-        "load_trained": false,
+        "save_file_path":
+        "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\subj1_classifier.csv",
+        "load_trained": true,
+        "load_file_path":
+        "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\subj1_classifier.csv",
         "buffer_options": {
-          "print_buffer_size": true,
           "clear_output_buffer_on_data_input": true,
           "clear_input_buffer_after_process": true,
           "clear_output_buffer_after_process": true,
           "clear_input_buffer_after_training": true,
-          "process_input_buffer_after_training": true
+          "process_input_buffer_after_training": true,
+          "print_buffer_size": false
         },
         "outputs": {
-          "main": []
+          "main": [
+            {
+              "node": "interpolate_events",
+              "input": "main"
+            }
+          ],
+          "probability": [
+            {
+            "node": "interpolate_probabilities",
+            "input": "main"
+            }
+          ]
         }
+      },
+      "interpolate_probabilities": {
+        "module": "models.node.processing",
+        "type": "Interpolate",
+        "enable_log": true,
+        "repetition_count": 75,
+        "use_extra_data": true,
+        "extra_data": 33,
+        "buffer_options": {
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true,
+          "print_buffer_size": false
+        },
+        "outputs": {
+          "main": [
+            {
+              "node": "probabilities",
+              "input": "main"
+            }
+          ]
+        }
+      },
+      "interpolate_events": {
+        "module": "models.node.processing",
+        "type": "Interpolate",
+        "enable_log": true,
+        "repetition_count": 75,
+        "use_extra_data": true,
+        "extra_data": 33,
+        "buffer_options": {
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true,
+          "print_buffer_size": false
+        },
+        "outputs": {
+          "main": [
+            {
+              "node": "events_estimated",
+              "input": "main"
+            }
+          ]
+        }
+      },
+      "probabilities": {
+        "module": "models.node.output.file",
+        "type": "CSVFile",
+        "enable_log": true,
+        "file_path": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\subj1_probabilities.csv",
+        "buffer_options": {
+          "print_buffer_size": false
+        },
+        "outputs": {}
+      },
+      "events_estimated": {
+        "module": "models.node.output.file",
+        "type": "CSVFile",
+        "enable_log": true,
+        "file_path": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\subj1_events_estimated.csv",
+        "buffer_options": {
+          "print_buffer_size": false
+        },
+        "outputs": {}
       }
     }
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

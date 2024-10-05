@@ -1,5 +1,5 @@
 import abc
-from typing import Final, Any, List, Dict
+from typing import Final, Any, List, Dict, Tuple
 
 from sklearn.base import TransformerMixin, BaseEstimator
 
@@ -27,7 +27,7 @@ class SKLearnClassifier(SKLearnCompatibleTrainableNode):
         super()._validate_parameters(parameters)
 
     @abc.abstractmethod
-    def _initialize_trainable_processor(self) -> (TransformerMixin, BaseEstimator):
+    def _initialize_trainable_processor(self) -> Tuple[TransformerMixin, BaseEstimator]:
         raise NotImplementedError()
 
     @abc.abstractmethod
@@ -63,11 +63,27 @@ class SKLearnClassifier(SKLearnCompatibleTrainableNode):
         }
 
     def _inner_process_data(self, data: Any) -> Any:
+        data_shape = data.shape
+        if len(data_shape) > 2:
+            # Reshape array into a 2D array for predict function
+            nsamples = data_shape[0]
+            nx = data_shape[1]
+            ny = data_shape[2]
+            data = data.reshape((nsamples, nx*ny))
         return self.sklearn_processor.predict(data)
 
     def _get_probability(self, data: Any) -> Any:
         if not (hasattr(self.sklearn_processor, 'predict_proba') and callable(self.sklearn_processor.predict_proba)):
             return [[]]
+        
+        data_shape = data.shape
+        if len(data_shape) > 2:
+            # Reshape array into a 2D array for predict_proba function
+            nsamples = data_shape[0]
+            nx = data_shape[1]
+            ny = data_shape[2]
+            data = data.reshape((nsamples, nx*ny))
+
         return self.sklearn_processor.predict_proba(data)
 
     def _get_outputs(self) -> List[str]:

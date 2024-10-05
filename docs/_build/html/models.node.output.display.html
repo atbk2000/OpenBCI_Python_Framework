@@ -232,6 +232,49 @@
 </section>
 <section id="module-models.node.output.display.simplegraph">
 <span id="models-node-output-display-simplegraph-module"></span><h2>models.node.output.display.simplegraph module<a class="headerlink" href="#module-models.node.output.display.simplegraph" title="Permalink to this heading">#</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="models.node.output.display.simplegraph.SimpleGraph">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">models.node.output.display.simplegraph.</span></span><span class="sig-name descname"><span class="pre">SimpleGraph</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/models/node/output/display/simplegraph.html#SimpleGraph"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.node.output.display.simplegraph.SimpleGraph" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <a class="reference internal" href="models.node.output.html#models.node.output.output_node.OutputNode" title="models.node.output.output_node.OutputNode"><code class="xref py py-class docutils literal notranslate"><span class="pre">OutputNode</span></code></a></p>
+<p>This node displays it’s input in the console.
+“plot_signal”: {</p>
+<blockquote>
+<div><blockquote>
+<div><p>“module”: “models.node.output.display”,
+“type”: “SimpleGraph”,
+“window”: 500,
+“buffer_options”: {
+},
+“outputs”: {
+}</p>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<dl class="simple">
+<dt>Attributes:</dt><dd><p>_MODULE_NAME (str): The name of this module (in this case, ‘node.output.display’).
+INPUT_MAIN (str): The name of the main input (in this case, ‘main’).</p>
+</dd>
+</dl>
+<p><code class="docutils literal notranslate"><span class="pre">configuration.json</span></code> usage example:</p>
+<blockquote>
+<div><p><strong>name</strong>: Current node instance name (in this case, <code class="docutils literal notranslate"><span class="pre">plot_signal</span></code>).</p>
+<p><strong>type</strong>: Node type (in this case <code class="docutils literal notranslate"><span class="pre">SimpleGraph</span></code>).</p>
+<p><strong>module</strong>: Current module name (in this case <code class="docutils literal notranslate"><span class="pre">models.node.output.display</span></code>).</p>
+<p><strong>window</strong>: Plotting window size, in samples (in this case, 500 samples).</p>
+</div></blockquote>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="models.node.output.display.simplegraph.SimpleGraph.INPUT_MAIN">
+<span class="sig-name descname"><span class="pre">INPUT_MAIN</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">Final</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'main'</span></em><a class="headerlink" href="#models.node.output.display.simplegraph.SimpleGraph.INPUT_MAIN" title="Permalink to this definition">#</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="models.node.output.display.simplegraph.SimpleGraph.dispose">
+<span class="sig-name descname"><span class="pre">dispose</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/models/node/output/display/simplegraph.html#SimpleGraph.dispose"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#models.node.output.display.simplegraph.SimpleGraph.dispose" title="Permalink to this definition">#</a></dt>
+<dd><p>Node self implementation of disposal of allocated resources.</p>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-models.node.output.display">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-models.node.output.display" title="Permalink to this heading">#</a></h2>
@@ -295,7 +338,14 @@
             <ul>
 <li><a class="reference internal" href="#">models.node.output.display package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#module-models.node.output.display.simplegraph">models.node.output.display.simplegraph module</a></li>
+<li><a class="reference internal" href="#module-models.node.output.display.simplegraph">models.node.output.display.simplegraph module</a><ul>
+<li><a class="reference internal" href="#models.node.output.display.simplegraph.SimpleGraph"><code class="docutils literal notranslate"><span class="pre">SimpleGraph</span></code></a><ul>
+<li><a class="reference internal" href="#models.node.output.display.simplegraph.SimpleGraph.INPUT_MAIN"><code class="docutils literal notranslate"><span class="pre">SimpleGraph.INPUT_MAIN</span></code></a></li>
+<li><a class="reference internal" href="#models.node.output.display.simplegraph.SimpleGraph.dispose"><code class="docutils literal notranslate"><span class="pre">SimpleGraph.dispose()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a class="reference internal" href="#module-models.node.output.display">Module contents</a></li>
 </ul>
 </li>
