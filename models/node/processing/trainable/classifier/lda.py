@@ -1,5 +1,5 @@
 import abc
-from typing import Final, Any
+from typing import Final, Any, Tuple
 
 from sklearn.base import TransformerMixin, BaseEstimator
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
@@ -54,7 +54,7 @@ class LDA(SKLearnClassifier):
         """
         super()._initialize_parameter_fields(parameters)
 
-    def _initialize_trainable_processor(self) -> (TransformerMixin, BaseEstimator):
+    def _initialize_trainable_processor(self) -> Tuple[TransformerMixin, BaseEstimator]:
         """ Initializes the trainable processor. In this case it initializes the ``LinearDiscriminantAnalysis`` classifier
         from sklearn.
 

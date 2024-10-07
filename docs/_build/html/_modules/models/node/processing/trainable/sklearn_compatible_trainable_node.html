@@ -226,7 +226,8 @@
           <h1>Source code for models.node.processing.trainable.sklearn_compatible_trainable_node</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">abc</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Final</span><span class="p">,</span> <span class="n">Any</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Final</span><span class="p">,</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Tuple</span>
+<span class="kn">from</span> <span class="nn">statistics</span> <span class="kn">import</span> <span class="n">mode</span>
 
 <span class="kn">import</span> <span class="nn">joblib</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -285,10 +286,10 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">sklearn_processor</span> <span class="o">=</span> <span class="kc">None</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_initialize_parameter_fields</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sklearn_processor</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">sklearn_processor</span><span class="p">:</span> <span class="p">(</span><span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">)</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_trainable_processor</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sklearn_processor</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_initialize_trainable_processor</span><span class="p">()</span>
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
-    <span class="k">def</span> <span class="nf">_initialize_trainable_processor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="p">(</span><span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">_initialize_trainable_processor</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Tuple</span><span class="p">[</span><span class="n">TransformerMixin</span><span class="p">,</span> <span class="n">BaseEstimator</span><span class="p">]:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; Initializes the trainable processor. This method should be implemented by the subclasses.</span>
 
 <span class="sd">        :raises NotImplementedError: If the method is not implemented by the subclass.</span>
@@ -359,7 +360,7 @@
         <span class="k">return</span> <span class="n">formatted_data</span>
 
     <span class="k">def</span> <span class="nf">_format_raw_label</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">raw_label</span><span class="p">:</span> <span class="n">FrameworkData</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Any</span><span class="p">:</span>
-<span class="w">        </span><span class="sd">&quot;&quot;&quot; This method add to each raw data epoch the according label. This is done by getting the maximum value of each epoch</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; This method add to each raw data epoch the according label. This is done by getting the most common value of each epoch</span>
 <span class="sd">        and adding it to the label list. Then the label list is converted to a numpy array and stored in the class variable</span>
 <span class="sd">        ``_format_raw_label``.</span>
 
@@ -370,8 +371,15 @@
 <span class="sd">        :rtype: ndarray</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">formatted_label</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">raw_label</span><span class="o">.</span><span class="n">get_data_single_channel</span><span class="p">():</span>
-            <span class="n">formatted_label</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="n">epoch</span><span class="p">))</span>
+        
+        <span class="n">data_single_channel</span> <span class="o">=</span> <span class="n">raw_label</span><span class="o">.</span><span class="n">get_data_single_channel</span><span class="p">()</span>
+        <span class="c1"># Check that epoch has more than one data</span>
+        <span class="k">if</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">data_single_channel</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">list</span><span class="p">)):</span>
+            <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="n">data_single_channel</span><span class="p">:</span>
+                <span class="n">formatted_label</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mode</span><span class="p">(</span><span class="n">epoch</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">formatted_label</span> <span class="o">=</span> <span class="n">data_single_channel</span>
+
         <span class="n">formatted_label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">formatted_label</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">formatted_label</span>
 
@@ -413,6 +421,13 @@
 <span class="sd">        :return: The trained processor.</span>
 <span class="sd">        :rtype: Any</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data_shape</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_shape</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="c1"># Reshape array into a 2D array for fit function</span>
+            <span class="n">nsamples</span> <span class="o">=</span> <span class="n">data_shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">nx</span> <span class="o">=</span> <span class="n">data_shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">ny</span> <span class="o">=</span> <span class="n">data_shape</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="n">nsamples</span><span class="p">,</span> <span class="n">nx</span><span class="o">*</span><span class="n">ny</span><span class="p">))</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sklearn_processor</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_train</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">FrameworkData</span><span class="p">,</span> <span class="n">label</span><span class="p">:</span> <span class="n">FrameworkData</span><span class="p">):</span>

@@ -424,12 +424,12 @@
 <div class="viewcode-block" id="OpenBCIBoard.dispose"><a class="viewcode-back" href="../../../../models.node.generator.html#models.node.generator.openbciboard.OpenBCIBoard.dispose">[docs]</a>    <span class="k">def</span> <span class="nf">dispose</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot; Node self implementation of disposal of allocated resources.</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_board</span><span class="p">()</span><span class="o">.</span><span class="n">stop_stream</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_board</span><span class="p">()</span><span class="o">.</span><span class="n">release_session</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_board_streaming</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_clear_output_buffer</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_clear_input_buffer</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_clear_input_buffer</span><span class="p">()</span></div>
 
     <span class="nd">@staticmethod</span>
     <span class="k">def</span> <span class="nf">_set_log_level</span><span class="p">(</span><span class="n">log_level</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;OFF&quot;</span><span class="p">):</span>
@@ -498,7 +498,7 @@
         <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_board</span><span class="p">()</span><span class="o">.</span><span class="n">is_prepared</span><span class="p">():</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_get_board</span><span class="p">()</span><span class="o">.</span><span class="n">prepare_session</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_get_board</span><span class="p">()</span><span class="o">.</span><span class="n">start_stream</span><span class="p">()</span>
-        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_is_board_streaming</span> <span class="o">=</span> <span class="kc">True</span>
 
     <span class="k">def</span> <span class="nf">_get_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -535,7 +535,24 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">_insert_new_input_data</span><span class="p">(</span><span class="n">accelerometer_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">OUTPUT_ACCELEROMETER</span><span class="p">)</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">_insert_new_input_data</span><span class="p">(</span><span class="n">timestamp_data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">OUTPUT_TIMESTAMP</span><span class="p">)</span>
 
-            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span></div>
+            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+
+<div class="viewcode-block" id="OpenBCIBoard.build_graphviz_representation"><a class="viewcode-back" href="../../../../models.node.generator.html#models.node.generator.openbciboard.OpenBCIBoard.build_graphviz_representation">[docs]</a>    <span class="k">def</span> <span class="nf">build_graphviz_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> [</span>
+<span class="s2">      shape=plaintext</span>
+<span class="s2">      tooltip=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="s2">      label=&lt;</span>
+<span class="s2">            &lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot; CELLPADDING=&quot;0&quot;&gt;</span>
+<span class="s2">               </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_build_graph_inputs</span><span class="p">()</span><span class="si">}</span>
+<span class="s2">               &lt;TR&gt;</span>
+<span class="s2">                  &lt;TD BORDER=&quot;1&quot; STYLE=&quot;ROUNDED&quot; CELLPADDING=&quot;4&quot; COLOR=&quot;black&quot;&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&lt;BR/&gt;&lt;FONT POINT-SIZE=&quot;5&quot;&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="si">}</span><span class="s2">&lt;/FONT&gt;&lt;BR/&gt;&lt;FONT POINT-SIZE=&quot;5&quot;&gt;Channels:</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_eeg_channel_names</span><span class="p">()</span><span class="si">}</span><span class="s2">&lt;/FONT&gt;&lt;BR/&gt;&lt;FONT POINT-SIZE=&quot;5&quot;&gt;Sampling rate: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_get_sampling_rate</span><span class="p">()</span><span class="si">}</span><span class="s2">Hz&lt;/FONT&gt;&lt;/TD&gt;</span>
+<span class="s2">               &lt;/TR&gt;</span>
+<span class="s2">               </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_build_graph_outputs</span><span class="p">()</span><span class="si">}</span>
+<span class="s2">            &lt;/TABLE&gt;</span>
+<span class="s2">        &gt;</span>
+<span class="s2">      ];</span>
+<span class="s2">        &quot;&quot;&quot;</span></div></div>
 </pre></div>
         </article>
       </div>

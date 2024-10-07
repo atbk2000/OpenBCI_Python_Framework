@@ -229,6 +229,8 @@
 <span class="kn">import</span> <span class="nn">copy</span>
 <span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">Final</span><span class="p">,</span> <span class="n">Any</span>
 
+<span class="kn">import</span> <span class="nn">time</span>
+
 <span class="kn">from</span> <span class="nn">models.exception.invalid_parameter_value</span> <span class="kn">import</span> <span class="n">InvalidParameterValue</span>
 <span class="kn">from</span> <span class="nn">models.exception.missing_parameter</span> <span class="kn">import</span> <span class="n">MissingParameterError</span>
 <span class="kn">from</span> <span class="nn">models.framework_data</span> <span class="kn">import</span> <span class="n">FrameworkData</span>
@@ -244,6 +246,7 @@
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
         <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">Final</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enable_log</span> <span class="o">=</span> <span class="kc">True</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;Initializing&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_validate_parameters</span><span class="p">(</span><span class="n">parameters</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">parameters</span> <span class="o">=</span> <span class="n">parameters</span>
@@ -260,6 +263,53 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_child_input_relation</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="n">Node</span><span class="p">,</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="p">{}</span>
 
+    <span class="k">def</span> <span class="nf">_build_graph_inputs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                &lt;TR&gt;</span>
+<span class="s2">                  &lt;TD BORDER=&quot;0&quot;&gt;</span>
+<span class="s2">                     &lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;&quot; CELLSPACING=&quot;0&quot; CELLPADDING=&quot;0&quot;&gt;</span>
+<span class="s2">                        &lt;TR&gt;</span>
+<span class="s2">                           &lt;TD WIDTH=&quot;20&quot;&gt;&lt;/TD&gt;</span>
+<span class="s2">                           </span><span class="si">{</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;&lt;TD PORT=&quot;in_</span><span class="si">{</span><span class="n">input_name</span><span class="si">}</span><span class="s1">&quot; BORDER=&quot;1&quot; CELLPADDING=&quot;1&quot;&gt;&lt;FONT POINT-SIZE=&quot;8&quot;&gt;</span><span class="si">{</span><span class="n">input_name</span><span class="si">}</span><span class="s1">&lt;/FONT&gt;&lt;/TD&gt;&lt;TD WIDTH=&quot;10&quot;&gt;&lt;/TD&gt;&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">input_name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">_get_inputs</span><span class="p">()]</span><span class="si">}</span>
+<span class="s2">                           &lt;TD WIDTH=&quot;10&quot;&gt;&lt;/TD&gt;</span>
+<span class="s2">                        &lt;/TR&gt;</span>
+<span class="s2">                     &lt;/TABLE&gt;</span>
+<span class="s2">                  &lt;/TD&gt;</span>
+<span class="s2">               &lt;/TR&gt;</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_build_graph_outputs</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">                &lt;TR&gt;</span>
+<span class="s2">                  &lt;TD BORDER=&quot;0&quot;&gt;</span>
+<span class="s2">                     &lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot; CELLPADDING=&quot;0&quot;&gt;</span>
+<span class="s2">                        &lt;TR&gt;</span>
+<span class="s2">                           &lt;TD WIDTH=&quot;20&quot;&gt;&lt;/TD&gt;</span>
+<span class="s2">                           </span><span class="si">{</span><span class="p">[</span><span class="sa">f</span><span class="s1">&#39;&lt;TD PORT=&quot;out_</span><span class="si">{</span><span class="n">output_name</span><span class="si">}</span><span class="s1">&quot; BORDER=&quot;1&quot; CELLPADDING=&quot;1&quot;&gt;&lt;FONT POINT-SIZE=&quot;8&quot;&gt;</span><span class="si">{</span><span class="n">output_name</span><span class="si">}</span><span class="s1">&lt;/FONT&gt;&lt;/TD&gt;&lt;TD WIDTH=&quot;10&quot;&gt;&lt;/TD&gt;&#39;</span><span class="w"> </span><span class="k">for</span><span class="w"> </span><span class="n">output_name</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="bp">self</span><span class="o">.</span><span class="n">_get_outputs</span><span class="p">()]</span><span class="si">}</span>
+<span class="s2">                           &lt;TD WIDTH=&quot;10&quot;&gt;&lt;/TD&gt;</span>
+<span class="s2">                        &lt;/TR&gt;</span>
+<span class="s2">                     &lt;/TABLE&gt;</span>
+<span class="s2">                  &lt;/TD&gt;</span>
+<span class="s2">               &lt;/TR&gt;</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="Node.build_graphviz_representation"><a class="viewcode-back" href="../../../models.node.html#models.node.node.Node.build_graphviz_representation">[docs]</a>    <span class="k">def</span> <span class="nf">build_graphviz_representation</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2"> [</span>
+<span class="s2">      shape=plaintext</span>
+<span class="s2">      tooltip=&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="si">}</span><span class="s2">&quot;</span>
+<span class="s2">      label=&lt;</span>
+<span class="s2">            &lt;TABLE BORDER=&quot;0&quot; CELLBORDER=&quot;0&quot; CELLSPACING=&quot;0&quot; CELLPADDING=&quot;0&quot;&gt;</span>
+<span class="s2">               </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_build_graph_inputs</span><span class="p">()</span><span class="si">}</span>
+<span class="s2">               &lt;TR&gt;</span>
+<span class="s2">                  &lt;TD BORDER=&quot;1&quot; STYLE=&quot;ROUNDED&quot; CELLPADDING=&quot;4&quot; COLOR=&quot;black&quot;&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">&lt;BR/&gt;&lt;FONT POINT-SIZE=&quot;5&quot;&gt;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="si">}</span><span class="s2">&lt;/FONT&gt;&lt;/TD&gt;</span>
+<span class="s2">               &lt;/TR&gt;</span>
+<span class="s2">               </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_build_graph_outputs</span><span class="p">()</span><span class="si">}</span>
+<span class="s2">            &lt;/TABLE&gt;</span>
+<span class="s2">        &gt;</span>
+<span class="s2">      ];</span>
+<span class="s2">        &quot;&quot;&quot;</span></div>
+
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">_validate_parameters</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -271,44 +321,55 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="s1">&#39;module&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MissingParameterError</span><span class="p">(</span>
-                <span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;module&#39;</span>
             <span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;models.node.&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;module&#39;</span><span class="p">]:</span>
             <span class="k">raise</span> <span class="n">InvalidParameterValue</span><span class="p">(</span>
-                <span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;module&#39;</span><span class="p">,</span>
                 <span class="n">cause</span><span class="o">=</span><span class="s1">&#39;must_be_part_of_[models.node]_module&#39;</span>
             <span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;type&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MissingParameterError</span><span class="p">(</span>
-                <span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;type&#39;</span>
             <span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;enable_log&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;enable_log&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
         <span class="k">if</span> <span class="s1">&#39;buffer_options&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MissingParameterError</span><span class="p">(</span>
-                <span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;buffer_options&#39;</span>
             <span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;outputs&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MissingParameterError</span><span class="p">(</span>
-                <span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;outputs&#39;</span>
             <span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;name&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">:</span>
             <span class="k">raise</span> <span class="n">MissingParameterError</span><span class="p">(</span>
-                <span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;name&#39;</span>
             <span class="p">)</span>
+
+        <span class="k">if</span> <span class="s1">&#39;print_buffer_size&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;buffer_options&#39;</span><span class="p">]:</span>
+            <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;buffer_options&#39;</span><span class="p">][</span><span class="s1">&#39;print_buffer_size&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
+        <span class="k">elif</span> <span class="nb">type</span><span class="p">(</span><span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;buffer_options&#39;</span><span class="p">][</span><span class="s1">&#39;print_buffer_size&#39;</span><span class="p">])</span> <span class="ow">is</span> <span class="ow">not</span> <span class="nb">bool</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">InvalidParameterValue</span><span class="p">(</span><span class="n">module</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span>
+                                        <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;buffer_options.print_buffer_size&#39;</span><span class="p">,</span>
+                                        <span class="n">cause</span><span class="o">=</span><span class="s1">&#39;must_be_bool&#39;</span><span class="p">)</span>
 
     <span class="nd">@abc</span><span class="o">.</span><span class="n">abstractmethod</span>
     <span class="k">def</span> <span class="nf">_initialize_parameter_fields</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">parameters</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Initializes parameter fields of this node. This is a abstract method and should be implemented by subclasses.</span>
+<span class="sd">        Initializes parameter fields of this node. This is an abstract method and should be implemented by subclasses.</span>
 
 <span class="sd">        :param parameters: Parameters passed to this node.</span>
 <span class="sd">        :type parameters: dict</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_enable_log</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;enable_log&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_should_print_buffer_size</span> <span class="o">=</span> <span class="n">parameters</span><span class="p">[</span><span class="s1">&#39;buffer_options&#39;</span><span class="p">][</span><span class="s1">&#39;print_buffer_size&#39;</span><span class="p">]</span>
         <span class="k">return</span>
 
     <span class="k">def</span> <span class="nf">_clear_input_buffer</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -329,6 +390,12 @@
     <span class="k">def</span> <span class="nf">_insert_data_in_buffer</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">FrameworkData</span><span class="p">,</span> <span class="n">buffer_data_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">buffer</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">FrameworkData</span><span class="p">]):</span>
         <span class="n">buffer</span><span class="p">[</span><span class="n">buffer_data_name</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
 
+    <span class="k">def</span> <span class="nf">_print_buffer_size</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">buffer_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">buffer</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">FrameworkData</span><span class="p">]):</span>
+        <span class="n">formatted_buffer_sizes</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;Buffer:</span><span class="si">{</span><span class="n">buffer_name</span><span class="si">}</span><span class="se">\t</span><span class="s1">&#39;</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">buffer</span><span class="p">:</span>
+            <span class="n">formatted_buffer_sizes</span> <span class="o">+=</span> <span class="sa">f</span><span class="s1">&#39;###Key:</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s1">=Length:</span><span class="si">{</span><span class="n">buffer</span><span class="p">[</span><span class="n">key</span><span class="p">]</span><span class="o">.</span><span class="n">get_data_count</span><span class="p">()</span><span class="si">}</span><span class="s1">### &#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">formatted_buffer_sizes</span><span class="p">)</span>
+
     <span class="k">def</span> <span class="nf">_insert_new_input_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">FrameworkData</span><span class="p">,</span> <span class="n">input_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Appends new data to the end of already existing input buffer</span>
 
@@ -338,6 +405,8 @@
 <span class="sd">        :type input_name: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_input_buffer</span><span class="p">[</span><span class="n">input_name</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_print_buffer_size</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_print_buffer_size</span><span class="p">(</span><span class="s1">&#39;input&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_input_buffer</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_insert_new_output_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">FrameworkData</span><span class="p">,</span> <span class="n">output_name</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
@@ -349,6 +418,8 @@
 <span class="sd">        :type output_name: str</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_output_buffer</span><span class="p">[</span><span class="n">output_name</span><span class="p">]</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">copy</span><span class="o">.</span><span class="n">deepcopy</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_should_print_buffer_size</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_print_buffer_size</span><span class="p">(</span><span class="s1">&#39;output&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_output_buffer</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_initialize_children</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
 <span class="w">        </span><span class="sd">&quot;&quot;&quot;Sets child nodes dictionary to a new, empty dict</span>
@@ -490,7 +561,8 @@
         <span class="k">return</span></div>
 
 <div class="viewcode-block" id="Node.print"><a class="viewcode-back" href="../../../models.node.html#models.node.node.Node.print">[docs]</a>    <span class="k">def</span> <span class="nf">print</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">_enable_log</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">_MODULE_NAME</span><span class="si">}</span><span class="s1">.</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span></div>
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">module_name</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>

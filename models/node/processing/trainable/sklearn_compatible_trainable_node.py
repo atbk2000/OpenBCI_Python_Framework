@@ -1,5 +1,6 @@
 import abc
-from typing import List, Dict, Final, Any
+import os
+from typing import List, Dict, Final, Any, Tuple
 from statistics import mode
 
 import joblib
@@ -59,10 +60,10 @@ class SKLearnCompatibleTrainableNode(TrainableProcessingNode):
         self.sklearn_processor = None
         super()._initialize_parameter_fields(parameters)
         if self.sklearn_processor is None:
-            self.sklearn_processor: (TransformerMixin, BaseEstimator) = self._initialize_trainable_processor()
+            self.sklearn_processor: Tuple[TransformerMixin, BaseEstimator] = self._initialize_trainable_processor()
 
     @abc.abstractmethod
-    def _initialize_trainable_processor(self) -> (TransformerMixin, BaseEstimator):
+    def _initialize_trainable_processor(self) -> Tuple[TransformerMixin, BaseEstimator]:
         """ Initializes the trainable processor. This method should be implemented by the subclasses.
 
         :raises NotImplementedError: If the method is not implemented by the subclass.
@@ -146,11 +147,15 @@ class SKLearnCompatibleTrainableNode(TrainableProcessingNode):
         :rtype: ndarray
         """
         formatted_label = []
-        for epoch in raw_label.get_data_single_channel():
-            formatted_epoch = epoch
-            if(len(epoch)>1):
-                formatted_epoch = mode(epoch)
-            formatted_label.append(formatted_epoch)
+        
+        data_single_channel = raw_label.get_data_single_channel()
+        # Check that epoch has more than one data
+        if(isinstance(data_single_channel[0], list)):
+            for epoch in data_single_channel:
+                formatted_label.append(mode(epoch))
+        else:
+            formatted_label = data_single_channel
+
         formatted_label = np.asarray(formatted_label)
         return formatted_label
 
@@ -192,6 +197,13 @@ class SKLearnCompatibleTrainableNode(TrainableProcessingNode):
         :return: The trained processor.
         :rtype: Any
         """
+        data_shape = data.shape
+        if len(data_shape) > 2:
+            # Reshape array into a 2D array for fit function
+            nsamples = data_shape[0]
+            nx = data_shape[1]
+            ny = data_shape[2]
+            data = data.reshape((nsamples, nx*ny))
         return self.sklearn_processor.fit(data, label)
 
     def _train(self, data: FrameworkData, label: FrameworkData):
