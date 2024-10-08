@@ -198,6 +198,7 @@ class MotorImagery(GeneratorNode):
         # Set sampling frequency to 1 as this generator node doesn't have a fixed generation rate,
         # being completely dependent on user configuration for each trial
         marker_data = FrameworkData.from_single_channel(1, [trial.code])
+        marker_data.input_data_on_channel([time.time()], 'time_marker')
         timestamp_data = FrameworkData.from_single_channel(1, [time.time()])
 
         self._insert_new_input_data(marker_data, self.OUTPUT_MARKER)

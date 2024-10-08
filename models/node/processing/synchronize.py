@@ -92,8 +92,8 @@ class Synchronize(ProcessingNode):
                 new_slave_data.splice(0, 1)
 
             value_index = slave_timestamp_index
-            if slave_timestamp_index - 1 >= 0:
-                value_index = slave_timestamp_index - 1
+            # if slave_timestamp_index - 1 >= 0:
+            #     value_index = slave_timestamp_index - 1
             new_slave_data.extend(
                 self._fill(
                     last_closest_index,

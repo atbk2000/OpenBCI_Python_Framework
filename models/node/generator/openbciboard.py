@@ -290,14 +290,14 @@ class OpenBCIBoard(GeneratorNode):
 
             eeg_data = FrameworkData.from_multi_channel(
                 self._get_sampling_rate(),
-                self._get_eeg_channel_names(),
-                data[self._get_eeg_channels()]
+                [*self._get_eeg_channel_names(), 'time_board'],
+                [*data[self._get_eeg_channels()], data[self._get_timestamp_channel()]]
             )
 
             accelerometer_data = FrameworkData.from_multi_channel(
                 self._get_sampling_rate(),
-                self._get_accelerometer_channel_names(),
-                data[self._get_accelerometer_channels()]
+                [*self._get_accelerometer_channel_names(),'time_board'],
+               [*data[self._get_accelerometer_channels()], data[self._get_timestamp_channel()]]
             )
 
             timestamp_data = FrameworkData.from_single_channel(
