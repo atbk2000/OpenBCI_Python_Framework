@@ -351,7 +351,7 @@ class FrameworkData:
         return len(self._data) == 1
 
     def splice(self, start_index: int, count: int) -> FrameworkData:
-        """This method is used remove a given number of data points from a starting index and returns the removed items.
+        """This method is used to remove a given number of data points from a starting index and returns the removed items.
 
         :param start_index: index of removal start
         :param count: number of data points to be removed
