@@ -126,8 +126,17 @@ class SlidingWindowSegmenter(Segmenter):
                 segmented_data.input_data_on_channel([data._data[channel][index:(index + self.window_size)]], channel)
             index += self.step_size
 
-        if (index + self.window_size) != data_count:
+        remaining_data = data_count - index
+
+        if remaining_data != 0:
             for channel in channels:
-                segmented_data.input_data_on_channel([data._data[channel][index:data_count]], channel)
+                filling_vector = []
+                
+                if self.filling_value == 'zero':
+                    filling_vector = [0] * (self.window_size - remaining_data)
+                elif self.filling_value == 'latest':
+                    filling_vector = [data._data[channel][data_count - 1]] * (self.window_size - remaining_data)
+
+                segmented_data.input_data_on_channel([data._data[channel][index:data_count] + filling_vector], channel)
 
         return segmented_data

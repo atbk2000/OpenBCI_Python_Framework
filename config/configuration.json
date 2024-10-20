@@ -3,13 +3,18 @@
   "nodes": {
     "root": {
       "data": {
-        "name": "csv_data",
         "module": "models.node.generator.file",
         "type": "CSVFileArray",
         "enable_log": true,
         "file_path":
         [
-          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\data\\series\\subj1_series8_data.csv"
+          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\data\\series\\subj1_series1_data.csv",
+          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\data\\series\\subj1_series2_data.csv",
+          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\data\\series\\subj1_series3_data.csv",
+          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\data\\series\\subj1_series4_data.csv",
+          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\data\\series\\subj1_series5_data.csv",
+          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\data\\series\\subj1_series6_data.csv",
+          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\data\\series\\subj1_series7_data.csv"
         ],
         "data_type": "float",
         "sampling_frequency": 500,
@@ -52,24 +57,60 @@
           "print_buffer_size": false
         },
         "outputs": {
-          "main": [],
-          "timestamp": [
+          "main": [
             {
-              "node": "timestamp_segmenter",
+              "node": "segmenter",
               "input": "main"
             }
-          ]
+          ],
+          "timestamp": []
+        }
+      },
+      "events": {
+        "module": "models.node.generator.file",
+        "type": "CSVFileArray",
+        "enable_log": true,
+        "file_path": [
+          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\data\\events\\subj1_series1_events.csv",
+          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\data\\events\\subj1_series2_events.csv",
+          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\data\\events\\subj1_series3_events.csv",
+          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\data\\events\\subj1_series4_events.csv",
+          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\data\\events\\subj1_series5_events.csv",
+          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\data\\events\\subj1_series6_events.csv",
+          "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\data\\events\\subj1_series7_events.csv"
+        ],
+        "sampling_frequency": 500,
+        "channel_column_names": [
+          "HandStart",
+          "FirstDigitTouch",
+          "BothStartLoadPhase",
+          "LiftOff",
+          "Replace",
+          "BothReleased"
+        ],
+        "buffer_options": {
+          "clear_output_buffer_on_generate": true,
+          "print_buffer_size": false
+        },
+        "outputs": {
+          "main": [
+            {
+              "node": "events_encoder",
+              "input": "main"
+            }
+          ],
+          "timestamp": []
         }
       }
     },
     "common": {
-      "timestamp_segmenter": {
+      "segmenter": {
         "module": "models.node.processing.segmenter",
         "type": "SlidingWindowSegmenter",
         "enable_log": true,
-        "window_size": 100,
+        "window_size": 50,
         "filling_value": "latest",
-        "step_size": 90,
+        "step_size": 25,
         "buffer_options": {
           "clear_output_buffer_on_data_input": true,
           "clear_input_buffer_after_process": false,
@@ -78,22 +119,167 @@
         "outputs":{
           "main": [
             {
-              "node": "output_timestamp",
+              "node": "csp",
+              "input": "data"
+            }
+          ]
+        }
+      },
+      "events_encoder": {
+        "module": "models.node.processing.encoder",
+        "type": "OneHotToSingle",
+        "enable_log": true,
+        "buffer_options": {
+          "clear_output_buffer_on_data_input": false,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true,
+          "print_buffer_size": false
+        },
+        "outputs": {
+          "main": [
+            {
+              "node": "events_segmenter",
               "input": "main"
             }
           ]
         }
       },
-      "output_timestamp": {
+      "events_segmenter": {
+        "module": "models.node.processing.segmenter",
+        "type": "SlidingWindowSegmenter",
+        "enable_log": true,
+        "window_size": 50,
+        "filling_value": "latest",
+        "step_size": 25,
+        "buffer_options": {
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": false,
+          "clear_output_buffer_after_process": true
+        },
+        "outputs":{
+          "main": [
+            {
+              "node": "csp",
+              "input": "label"
+            },
+            {
+              "node": "lda",
+              "input": "label"
+            }
+          ]
+        }
+      },
+      "csp": {
+        "module": "models.node.processing.trainable.feature_extractor",
+        "type": "CSP",
+        "number_of_components": 4,
+        "training_set_size": 52200,
+        "save_after_training": true,
+        "save_file_path": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\csp",
+        "load_trained": false,
+        "enable_log": true,
+        "buffer_options": {
+          "print_buffer_size": true,
+          "clear_output_buffer_on_data_input": false,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true,
+          "clear_input_buffer_after_training": false,
+          "process_input_buffer_after_training": true
+        },
+        "outputs": {
+          "main": [
+            {
+              "node": "lda",
+              "input": "data"
+            }
+          ]
+        }
+      },
+      "lda": {
+        "module": "models.node.processing.trainable.classifier",
+        "type": "LDA",
+        "enable_log": true,
+        "training_set_size": 52200,
+        "save_after_training": true,
+        "save_file_path":
+        "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\subj1_classifier.csv",
+        "load_trained": false,
+        "load_file_path":
+        "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\subj1_classifier.csv",
+        "buffer_options": {
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true,
+          "clear_input_buffer_after_training": true,
+          "process_input_buffer_after_training": true,
+          "print_buffer_size": false
+        },
+        "outputs": {
+          "main": [
+            {
+              "node": "label_decoder",
+              "input": "main"
+            }
+          ]
+        }
+      },
+      "label_decoder": {
+        "module": "models.node.processing.encoder",
+        "type": "SingleToOneHot",
+        "labels": [
+          "HandStart",
+          "FirstDigitTouch",
+          "BothStartLoadPhase",
+          "LiftOff",
+          "Replace",
+          "BothReleased"
+        ],
+        "buffer_options": {
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true
+        },
+        "outputs": {
+          "main": [
+            {
+              "node": "interpolate_events",
+              "input": "main"
+            }
+          ]
+        }
+      },
+      "interpolate_events": {
+        "module": "models.node.processing",
+        "type": "Interpolate",
+        "enable_log": true,
+        "window_size": 100,
+        "sliding_window": true,
+        "step_size": 25,
+        "buffer_options": {
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true,
+          "print_buffer_size": false
+        },
+        "outputs": {
+          "main": [
+            {
+              "node": "events_estimated",
+              "input": "main"
+            }
+          ]
+        }
+      },
+      "events_estimated": {
         "module": "models.node.output.file",
         "type": "CSVFile",
         "enable_log": true,
-        "file_path": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\output_timestamp.csv",
+        "file_path": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\outputs\\subj1_estimated.csv",
         "buffer_options": {
           "print_buffer_size": false,
           "clear_output_buffer_on_data_input": true,
-          "clear_output_buffer_after_process": true,
-          "clear_input_buffer_after_process": true
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true
         },
         "outputs": {}
       }

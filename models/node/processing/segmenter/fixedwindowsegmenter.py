@@ -100,13 +100,23 @@ class FixedWindowSegmenter(Segmenter):
         """
         segmented_data: FrameworkData = FrameworkData(sampling_frequency_hz=data.sampling_frequency)
         while True:
-            if data.get_data_count() > self.window_size:
+            remaining_data = data.get_data_count()
+            if remaining_data > self.window_size:
                 window = data.splice(0, self.window_size)
                 for channel in window.channels:
                     segmented_data.input_data_on_channel([window.get_data_on_channel(channel)], channel)
             else:
-                window = data.splice(0, data.get_data_count())
-                for channel in window.channels:
-                    segmented_data.input_data_on_channel([window.get_data_on_channel(channel)], channel)
+                if remaining_data != 0:
+
+                    window = data.splice(0, remaining_data)
+                    for channel in window.channels:
+                        filling_vector = []
+
+                        if self.filling_value == 'zero':
+                            filling_vector = [0] * (self.window_size - remaining_data)
+                        elif self.filling_value == 'latest':
+                            filling_vector = [window._data[channel][remaining_data - 1]] * (self.window_size - remaining_data)
+
+                        segmented_data.input_data_on_channel([window.get_data_on_channel(channel) + filling_vector], channel)
                 break
         return segmented_data

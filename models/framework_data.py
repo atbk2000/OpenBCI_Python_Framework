@@ -336,7 +336,8 @@ class FrameworkData:
         :return: ``True`` if the ``FrameworkData`` object has data stored in it, ``False`` otherwise.
         :rtype: bool
         """
-
+        if type(self.channels) != list:
+            self.channels = list(self.channels)
         return len(self._data) > 0 and len(self._data[self.channels[0]]) > 0
 
     def is_1d(self) -> bool:
