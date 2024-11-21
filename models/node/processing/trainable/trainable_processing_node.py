@@ -42,6 +42,8 @@ class TrainableProcessingNode(ProcessingNode):
     INPUT_DATA: Final[str] = 'data'
     INPUT_LABEL: Final[str] = 'label'
 
+    OUTPUT_TRAINING_FINISHED: Final[str] = 'training_finished'
+
     @abc.abstractmethod
     def _validate_parameters(self, parameters: dict):
         """ Validates the parameters passed to this node. In this case it checks if the parameters are present and if they
@@ -205,6 +207,9 @@ class TrainableProcessingNode(ProcessingNode):
         self._train(self._input_buffer[self.INPUT_DATA], self._input_buffer[self.INPUT_LABEL])
         self.print(f'Finished training of {self._MODULE_NAME}')
         self._is_trained = True
+        trained_signal = FrameworkData()
+        trained_signal.input_data_on_channel([True])
+        self._insert_new_output_data(trained_signal, self.OUTPUT_TRAINING_FINISHED)
         if self._save_after_training:
             self.print(f'Saving trained {self._MODULE_NAME}')
             save_path = self._save_file_path
@@ -242,7 +247,8 @@ class TrainableProcessingNode(ProcessingNode):
         :rtype: bool
         """
         return self._input_buffer[self.INPUT_DATA].get_data_count() >= self.training_set_size \
-               and self._input_buffer[self.INPUT_LABEL].get_data_count() >= self.training_set_size
+               and self._input_buffer[self.INPUT_LABEL].get_data_count() >= self.training_set_size \
+               and self._input_buffer[self.INPUT_DATA].get_data_count() == self._input_buffer[self.INPUT_LABEL].get_data_count()
 
     def _is_processing_condition_satisfied(self) -> bool:
         """ Returns whether the processing condition is satisfied. In this case it returns True if the input buffer
@@ -271,4 +277,14 @@ class TrainableProcessingNode(ProcessingNode):
         return [
             self.INPUT_DATA,
             self.INPUT_LABEL
+        ]
+
+    def _get_outputs(self) -> List[str]:
+        """ Returns the outputs of this node. In this case it returns the ``OUTPUT_TRAINING_FINISHED``.
+
+        :return: The outputs of this node.
+        :rtype: List[str]
+        """
+        return [
+            self.OUTPUT_TRAINING_FINISHED
         ]

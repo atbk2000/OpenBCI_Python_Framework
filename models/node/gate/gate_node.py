@@ -29,6 +29,16 @@ class Gate(Node):
             raise InvalidParameterValue(module=self._MODULE_NAME, name=self.name,
                                         parameter='buffer_options.clear_input_buffer_if_condition_not_met',
                                         cause='must_be_bool')
+        if 'clear_input_buffer_if_condition_met' not in parameters['buffer_options']:
+            raise MissingParameterError(
+                module=self._MODULE_NAME,
+                name=self.name,
+                parameter='buffer_options.clear_input_buffer_if_condition_met'
+            )
+        if type(parameters['buffer_options']['clear_input_buffer_if_condition_met']) is not bool:
+            raise InvalidParameterValue(module=self._MODULE_NAME, name=self.name,
+                                        parameter='buffer_options.clear_input_buffer_if_condition_met',
+                                        cause='must_be_bool')
         if 'clear_output_buffer_if_condition_met' not in parameters['buffer_options']:
             raise MissingParameterError(
                 module=self._MODULE_NAME,
@@ -51,13 +61,16 @@ class Gate(Node):
         :type buffer_options: dict
         """
         self.clear_input_buffer_if_condition_not_met = buffer_options['clear_input_buffer_if_condition_not_met']
+        self.clear_input_buffer_if_condition_met = buffer_options['clear_input_buffer_if_condition_met']
+        self.clear_output_buffer_if_condition_not_met = buffer_options['clear_output_buffer_if_condition_not_met']
         self.clear_output_buffer_if_condition_met = buffer_options['clear_output_buffer_if_condition_met']
+        self._gate_bypass_condition_met = False
 
     def _run(self, data: FrameworkData, input_name: str) -> None:
         self.print(f'Inserting data in input buffer {input_name}')
         self._insert_new_input_data(data, input_name)
-        gate_bypass_condition_met = self._check_gate_condition()
-        if not gate_bypass_condition_met:
+        self._gate_bypass_condition_met = self._check_gate_condition()
+        if not self._gate_bypass_condition_met:
             if self.clear_input_buffer_if_condition_not_met:
                 self.print('Clearing input buffer because condition was not met')
                 self._clear_input_buffer()
@@ -66,13 +79,16 @@ class Gate(Node):
             self.print('Clearing output buffer because condition was met')
             self._clear_output_buffer()
         self._insert_new_output_data(self._input_buffer[self.INPUT_SIGNAL], self.OUTPUT_MAIN)
+        if self.clear_input_buffer_if_condition_met:
+            self.print('Clearing input buffer because condition was met')
+            self._clear_input_buffer()
 
     @abc.abstractmethod
     def _check_gate_condition(self) -> bool:
         raise NotImplementedError()
 
     def _is_next_node_call_enabled(self) -> bool:
-        return self._output_buffer[self.OUTPUT_MAIN].get_data_count() > 0
+        return self._gate_bypass_condition_met
 
     def _get_inputs(self) -> List[str]:
         return [
