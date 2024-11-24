@@ -1,6 +1,7 @@
 import abc
 import os
 from typing import List, Dict, Final, Any, Tuple
+from statistics import mode
 
 import joblib
 import numpy as np
@@ -145,15 +146,18 @@ class SKLearnCompatibleTrainableNode(TrainableProcessingNode):
         :return: The formatted label.
         :rtype: ndarray
         """
-        # formatted_label = []
-        # for epoch in raw_label.get_data_single_channel():
-        #     formatted_epoch = epoch
-        #     if(len(epoch)>1):
-        #         formatted_epoch = mode(epoch)
-        #     formatted_label.append(formatted_epoch)
-        # formatted_label = np.asarray(formatted_label)
-        # return formatted_label
-        return np.asarray(raw_label.get_data_single_channel())
+        formatted_label = []
+        
+        data_single_channel = raw_label.get_data_single_channel()
+        # Check that epoch has more than one data
+        if(isinstance(data_single_channel[0], list)):
+            for epoch in data_single_channel:
+                formatted_label.append(mode(epoch))
+        else:
+            formatted_label = data_single_channel
+
+        formatted_label = np.asarray(formatted_label)
+        return formatted_label
 
     @abc.abstractmethod
     def _format_processed_data(self, processed_data: Any, sampling_frequency: float) -> FrameworkData:
