@@ -105,10 +105,7 @@ class CSVFileArray(SingleRunGeneratorNode):
 
     def _generate_data(self) -> Dict[str, FrameworkData]:
         main_data = FrameworkData(self.sampling_frequency, self.channel_column_names)
-        if self._should_generate_timestamp():
-            timestamp_data = FrameworkData(self.sampling_frequency)
-        else:
-            timestamp_data = FrameworkData(self.sampling_frequency, [self.timestamp_column_name])
+        timestamp_data = FrameworkData(self.sampling_frequency)
         for file in self.file_paths:
             with open(file) as csv_file:
                 self.print(f'{file} opened')
