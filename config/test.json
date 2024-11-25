@@ -1,0 +1,266 @@
+{
+  "show_diagram": true,
+  "nodes": {
+    "root": 
+    {
+     "test_eeg": {
+        "module": "models.node.generator.file",
+        "type": "CSVFile",
+        "enable_log": true,
+        "buffer_options": {
+          "clear_output_buffer_on_generate": true,
+          "print_buffer_size": false
+        },
+        "file_path": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\data\\WithResting\\subj1_series1_data.csv",
+        "data_type": "float",
+        "sampling_frequency": 500,
+        "channel_column_names": [
+          "Fp1",
+          "Fp2",
+          "F7",
+          "F3",
+          "Fz",
+          "F4",
+          "F8",
+          "FC5",
+          "FC1",
+          "FC2",
+          "FC6",
+          "T7",
+          "C3",
+          "Cz",
+          "C4",
+          "T8",
+          "TP9",
+          "CP5",
+          "CP1",
+          "CP2",
+          "CP6",
+          "TP10",
+          "P7",
+          "P3",
+          "Pz",
+          "P4",
+          "P8",
+          "PO9",
+          "O1",
+          "Oz",
+          "O2",
+          "PO10"
+        ],
+        "outputs": {
+          "main": [
+            {
+              "node": "bandpass",
+              "input": "main"
+            }
+          ],
+          "timestamp": []
+        }
+      },
+      "test_labels": {
+        "module": "models.node.generator.file",
+        "type": "CSVFile",
+        "enable_log": true,
+        "buffer_options": {
+          "clear_output_buffer_on_generate": true,
+          "print_buffer_size": false
+        },
+        "file_path": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\grasp-and-lift-eeg-detection\\data\\WithResting\\subj1_series1_events.csv",
+        "data_type": "float",
+        "sampling_frequency": 500,
+        "channel_column_names": [
+          "HandStart",
+          "FirstDigitTouch",
+          "BothStartLoadPhase",
+          "LiftOff",
+          "Replace",
+          "BothReleased"
+        ],
+        "outputs": {
+          "main": [
+            {
+              "node": "roc_auc",
+              "input": "actual"
+            }
+          ],
+          "timestamp": []
+        }
+      }
+    },
+    "common": 
+    {
+      "bandpass": {
+        "module": "models.node.processing.filter",
+        "type": "BandPass",
+        "enable_log": true,
+        "buffer_options": {
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true,
+          "print_buffer_size": false
+        },
+        "low_cut_frequency_hz": 8.0,
+        "high_cut_frequency_hz": 30.0,
+        "order": 4,
+        "outputs": {
+          "main": [
+            {
+              "node": "csp",
+              "input": "data"
+            }
+          ]
+        }
+      },
+      "csp": {
+        "module": "models.node.processing.trainable.feature_extractor",
+        "type": "CSP",
+        "enable_log": true,
+        "buffer_options": {
+          "clear_output_buffer_on_data_input": false,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true,
+          "clear_input_buffer_after_training": true,
+          "process_input_buffer_after_training": false,
+          "print_buffer_size": false
+        },
+        "training_set_size": 250,
+        "number_of_components": 6,
+        "save_after_training": true,
+        "load_trained": true,
+        "save_file_path": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\OpenBCI_Python_Framework\\cues\\CSP.sav",
+        "load_file_path": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\OpenBCI_Python_Framework\\cues\\CSP.sav",
+        "outputs": {
+          "main": [
+            {
+              "node": "smoothing",
+              "input": "main"
+            }
+          ]
+        }
+      },
+      "smoothing": {
+        "module": "models.node.processing",
+        "type": "Smoothing",
+        "window_type": "boxcar",
+        "window_size": 300,
+        "convolution_mode": "full",
+        "enable_log": true,
+        "buffer_options": {
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true,
+          "print_buffer_size": false
+        },
+        "outputs": {
+          "main": [
+            {
+              "node": "lda",
+              "input": "data"
+            }
+          ]
+        }
+      },
+      "lda": {
+        "module": "models.node.processing.trainable.classifier",
+        "type": "LDA",
+        "enable_log": true,
+        "buffer_options": {
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true,
+          "clear_input_buffer_after_training": false,
+          "process_input_buffer_after_training": true,
+          "print_buffer_size": false
+        },
+        "training_set_size": 2,
+        "save_after_training": true,
+        "load_trained": true,
+        "save_file_path": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\OpenBCI_Python_Framework\\cues\\LDA.sav",
+        "load_file_path": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\OpenBCI_Python_Framework\\cues\\LDA.sav",
+        "outputs": {
+          "main": [],
+          "probability": [
+            {
+              "node": "roc_auc",
+              "input": "predicted"
+            }
+          ],
+          "training_finished": []
+        }
+      },
+      "roc_auc": {
+        "module": "models.node.processing.metric",
+        "type": "ROCAUC",
+        "enable_log": true,
+        "buffer_options": {
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true,
+          "print_buffer_size": false
+        },
+        "outputs": {
+          "main": [
+            {
+              "node": "console_out",
+              "input": "main"
+            }
+          ]
+        }
+      },
+      "console_out": {
+        "module": "models.node.output.display",
+        "type": "Console",
+        "prefix": "ROC AUC Score = ",
+        "enable_log": true,
+        "buffer_options": {
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true,
+          "print_buffer_size": false
+        },
+        "outputs": {}
+      },
+      "label_decoder": {
+        "module": "models.node.processing.encoder",
+        "type": "SingleToOneHot",
+        "enable_log": true,
+        "labels": [
+          "HandStart",
+          "FirstDigitTouch",
+          "BothStartLoadPhase",
+          "LiftOff",
+          "Replace",
+          "BothReleased"
+        ],
+        "buffer_options": {
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true,
+          "print_buffer_size": false
+        },
+        "outputs": {
+          "main": [
+            {
+              "node": "csv_out",
+              "input": "main"
+            }
+          ]
+        }
+      },
+      "csv_out": {
+        "module": "models.node.output.file",
+        "type": "CSVFile",
+        "enable_log": true,
+        "file_path": "C:\\Users\\dell\\OneDrive\\Documentos\\UTFPR\\Disciplinas\\TCC2\\OpenBCI_Python_Framework\\cues\\output.csv",
+        "buffer_options": {
+          "print_buffer_size": false,
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true
+        },
+        "outputs": {}
+      }
+    }
+  }
+}
