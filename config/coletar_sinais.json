@@ -1,0 +1,201 @@
+{
+  "nodes": {
+    "root": {
+      "open_bci": {
+        "module": "models.node.generator",
+        "type": "OpenBCIBoard",
+        "enable_log": false,
+        "log_level": "TRACE",
+        "board": "CYTON_BOARD",
+        "communication": {
+          "serial_port": "COM3"
+        },
+        "buffer_options": {
+          "print_buffer_size":true,
+          "clear_output_buffer_on_generate": true
+        },
+        "outputs": {
+          "eeg": [
+            {
+            "node": "merge",
+            "input": "master_main"
+          },
+          {
+            "node": "out_board",
+            "input": "main"
+          }],
+          "accelerometer": [],
+          "timestamp": [
+            {
+              "node": "merge",
+              "input": "master_timestamp"
+            }
+          ]
+        }
+      },
+      "motor_imagery_session": {
+        "module": "models.node.generator",
+        "type": "MotorImagery",
+        "enable_log": false,
+        "buffer_options": {
+          "print_buffer_size":false,
+          "clear_output_buffer_on_generate": true
+        },
+        "shuffle_when_sequence_is_finished": false,
+        "trials": [
+          {
+            "name": "DESCANSO",
+            "code": 1000,
+            "duration": {
+              "mean": 5,
+              "standard_deviation": 0
+            },
+            "cue": {
+              "file": "cues\\print_and_beep.py",
+              "parameters": {
+                "message": "DESCANSO",
+                "frequency": 440,
+                "duration": 4800
+              }
+            }
+          },
+          {
+            "name": "LETRA U",
+            "code": 6000,
+            "duration": {
+              "mean": 5,
+              "standard_deviation": 0
+            },
+            "cue": {
+              "file": "cues\\print_and_beep.py",
+              "parameters": {
+                "message": "U",
+                "frequency": 530,
+                "duration": 4800
+              }
+            }
+          }
+        ],
+        "outputs": {
+          "marker": [
+            {
+              "node": "rename",
+              "input": "main"
+            },
+            {
+              "node": "out_motor_imagery",
+              "input": "main"
+            }
+          ],
+          "timestamp": [
+            {
+              "node": "merge",
+              "input": "slave_timestamp"
+            }
+          ]
+        }
+      }
+    },
+    "common": {
+      "out_board": {
+        "module": "models.node.output.file",
+        "enable_log": false,
+        "type": "CSVFile",
+        "file_path": "C:\\Users\\italo\\OneDrive\\Documentos\\GitHub\\OpenBCI_Python_Frameworkork\\cues\\out_board.csv",
+        "buffer_options": {
+          "print_buffer_size":true,
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true
+        },
+        "outputs":{}
+      },
+      "out_motor_imagery": {
+        "module": "models.node.output.file",
+        "enable_log": false,
+        "type": "CSVFile",
+        "file_path": "C:\\Users\\italo\\OneDrive\\Documentos\\GitHub\\OpenBCI_Python_Frameworkork\\cues\\out_motor_imagery.csv",
+        "buffer_options": {
+          "print_buffer_size":true,
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true
+        },
+        "outputs":{}
+      },
+      "rename": {
+        "module": "models.node.processing",
+        "type": "ChannelRename",
+        "enable_log": false,
+        "dictionary": {
+          "main": "marker"
+        },
+        "buffer_options": {
+          "print_buffer_size":true,
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true
+        },
+        "outputs": {
+          "main": [
+            {
+              "node": "merge",
+              "input": "slave_main"
+            },
+            {
+              "node": "out_rename",
+              "input": "main"
+            }
+          ]
+        }
+      },
+      "out_rename": {
+        "module": "models.node.output.file",
+        "enable_log": false,
+        "type": "CSVFile",
+        "file_path": "C:\\Users\\italo\\OneDrive\\Documentos\\GitHub\\OpenBCI_Python_Frameworkork\\cues\\out_rename.csv",
+        "buffer_options": {
+          "print_buffer_size":true,
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true
+        },
+        "outputs":{}
+      },
+      "merge": {
+        "module": "models.node.processing",
+        "type": "Merge",
+        "enable_log": false,
+        "slave_filling": "sample_and_hold",
+        "buffer_options": {
+          "print_buffer_size":true,
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true
+        },
+        "outputs": {
+          "merged_main": [
+            {
+              "node": "out_final",
+              "input": "main"
+            }
+          ],
+          "timestamp": []
+        }
+      },
+      "out_final": {
+        "module": "models.node.output.file",
+        "enable_log": false,
+        "type": "CSVFile",
+        "file_path": "C:\\Users\\italo\\OneDrive\\Documentos\\GitHub\\OpenBCI_Python_Frameworkork\\cues\\coletas\\U_antonio.csv",
+        "buffer_options": {
+          "print_buffer_size":true,
+          "clear_output_buffer_on_data_input": true,
+          "clear_input_buffer_after_process": true,
+          "clear_output_buffer_after_process": true
+        },
+        "outputs":{}
+      }
+    }
+  }
+}

@@ -1,0 +1,388 @@
+{
+    "show_diagram": false,
+    "nodes": {
+      "root": 
+      {
+       "test_emg": {
+          "module": "models.node.generator.file",
+          "type": "CSVFileArray",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_generate": true,
+            "print_buffer_size": false
+          },
+          "file_path": [
+            "C:\\Users\\italo\\OneDrive\\Documentos\\GitHub\\OpenBCI_Python_Frameworkork\\cues\\coletas\\test\\A_antonio_data.csv",
+            "C:\\Users\\italo\\OneDrive\\Documentos\\GitHub\\OpenBCI_Python_Frameworkork\\cues\\coletas\\test\\E_antonio_data.csv",
+            "C:\\Users\\italo\\OneDrive\\Documentos\\GitHub\\OpenBCI_Python_Frameworkork\\cues\\coletas\\test\\I_antonio_data.csv",
+            "C:\\Users\\italo\\OneDrive\\Documentos\\GitHub\\OpenBCI_Python_Frameworkork\\cues\\coletas\\test\\O_antonio_data.csv",
+            "C:\\Users\\italo\\OneDrive\\Documentos\\GitHub\\OpenBCI_Python_Frameworkork\\cues\\coletas\\test\\U_antonio_data.csv"
+          ],
+          "data_type": "float",
+          "sampling_frequency": 250,
+          "channel_column_names": [
+            "Fp1",
+            "C3"
+          ],
+          "outputs": {
+            "main": [
+              {
+                "node": "lowpass",
+                "input": "main"
+              }
+            ],
+            "timestamp": []
+          }
+        },
+        "test_labels": {
+          "module": "models.node.generator.file",
+          "type": "CSVFileArray",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_generate": true,
+            "print_buffer_size": false
+          },
+          "file_path": [
+            "C:\\Users\\italo\\OneDrive\\Documentos\\GitHub\\OpenBCI_Python_Frameworkork\\cues\\coletas\\test\\A_antonio_events.csv",
+            "C:\\Users\\italo\\OneDrive\\Documentos\\GitHub\\OpenBCI_Python_Frameworkork\\cues\\coletas\\test\\E_antonio_events.csv",
+            "C:\\Users\\italo\\OneDrive\\Documentos\\GitHub\\OpenBCI_Python_Frameworkork\\cues\\coletas\\test\\I_antonio_events.csv",
+            "C:\\Users\\italo\\OneDrive\\Documentos\\GitHub\\OpenBCI_Python_Frameworkork\\cues\\coletas\\test\\O_antonio_events.csv",
+            "C:\\Users\\italo\\OneDrive\\Documentos\\GitHub\\OpenBCI_Python_Frameworkork\\cues\\coletas\\test\\U_antonio_events.csv"
+          ],
+          "data_type": "float",
+          "sampling_frequency": 250,
+          "channel_column_names": [
+            "marker"
+          ],
+          "outputs": {
+            "main": [
+                {
+                "node": "feature_extraction",
+                "input": "events"
+                }
+            ],
+            "timestamp": []
+          }
+        }
+      },
+      "common": 
+      {
+        "lowpass": {
+          "module": "models.node.processing.filter",
+          "type": "LowPass",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": true,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "high_cut_frequency_hz": 100.0,
+          "order": 5,
+          "outputs": {
+            "main": [
+              {
+                "node": "highpass",
+                "input": "main"
+              }
+            ]
+          }
+        },
+        "highpass": {
+          "module": "models.node.processing.filter",
+          "type": "HighPass",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": true,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "low_cut_frequency_hz": 30.0,
+          "order": 5,
+          "outputs": {
+            "main": [
+              {
+                "node": "bandpass",
+                "input": "main"
+              }
+            ]
+          }
+        },
+        "bandpass": {
+          "module": "models.node.processing.filter",
+          "type": "BandPass",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": true,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "low_cut_frequency_hz": 30.0,
+          "high_cut_frequency_hz": 120.0,
+          "order": 5,
+          "outputs": {
+            "main": [
+              {
+                "node": "notch",
+                "input": "main"
+              }
+            ]
+          }
+        },
+        "notch": {
+          "module": "models.node.processing.filter",
+          "type": "Notch",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": true,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "cut_frequency_hz": 60.0,
+          "Q": 30,
+          "outputs": {
+            "main": [
+              {
+                "node": "rectify",
+                "input": "main"
+              }
+            ]
+          }
+        },
+        "rectify": {
+          "module": "models.node.processing",
+          "type": "RectifySignal",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": true,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "outputs": {
+            "main": [
+              {
+                "node": "movingAverage",
+                "input": "main"
+              }
+            ]
+          }
+        },
+        "movingAverage": {
+          "module": "models.node.processing",
+          "type": "Smoothing",
+          "window_type": "exponential",
+          "window_size": 50,
+          "convolution_mode": "valid",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": true,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "outputs": {
+            "main": [
+              {
+                "node": "normalize",
+                "input": "main"
+              }
+            ]
+          }
+        },
+        "normalize": {
+          "module": "models.node.processing",
+          "type": "NormalizeSignal",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": true,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "outputs": {
+            "main": [
+              {
+                "node": "feature_extraction",
+                "input": "features"
+              }
+            ]
+          }
+        },
+        "feature_extraction": {
+          "module": "models.node.processing",
+          "type": "FeatureExtractionNode",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": true,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "sampling_frequency": 250,
+          "outputs": {
+            "features": [
+              {
+                "node": "lda",
+                "input": "data"
+              }
+            ],
+            "events": [
+              {
+                "node": "accuracy",
+                "input": "actual"
+              }
+            ]
+          }
+        },
+        "lda": {
+          "module": "models.node.processing.trainable.classifier",
+          "type": "LDA",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": true,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "clear_input_buffer_after_training": false,
+            "process_input_buffer_after_training": true,
+            "print_buffer_size": false
+          },
+          "training_set_size": 2,
+          "save_after_training": true,
+          "load_trained": true,
+          "save_file_path": "G:\\Meu Drive\\PDI\\UTFPR\\TCC\\Outputs\\LDA_emg.sav",
+          "load_file_path": "G:\\Meu Drive\\PDI\\UTFPR\\TCC\\Outputs\\LDA_emg.sav",
+          "outputs": {
+            "main": [],
+            "probability": [
+                {
+                    "node": "decoder",
+                    "input": "main"
+                }
+            ],
+            "training_finished": []
+          }
+        },
+        "accuracy": {
+          "module": "models.node.processing.metric",
+          "type": "accuracy",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": true,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "outputs": {
+            "main": [
+              {
+                "node": "console_out",
+                "input": "main"
+              }
+            ]
+          }
+        },
+        "console_out": {
+          "module": "models.node.output.display",
+          "type": "Console",
+          "prefix": "Accuracy Score = ",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": true,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "outputs": {}
+        },
+        "label_encoder": {
+          "module": "models.node.processing.encoder",
+          "type": "SingleToOneHot",
+          "enable_log": true,
+          "labels": [
+            "DESCANSO",
+            "A",
+            "E",
+            "I",
+            "O",
+            "U"
+          ],
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": true,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "outputs": {
+            "main": [
+              {
+                "node": "accuracy",
+                "input": "actual"
+              }
+            ]
+          }
+        },
+        "decoder": {
+          "module": "models.node.processing.encoder",
+          "type": "OneHotToSingle",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": false,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "outputs": {
+            "main": [
+              {
+                "node": "accuracy",
+                "input": "predicted"
+              }
+            ]
+          }
+        },
+        "csv_out": {
+          "module": "models.node.output.file",
+          "type": "CSVFile",
+          "enable_log": true,
+          "file_path": "G:\\Meu Drive\\PDI\\UTFPR\\TCC\\Outputs\\saida_LDA.csv",
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": false,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "outputs": {}
+        },
+        "csv_out2": {
+          "module": "models.node.output.file",
+          "type": "CSVFile",
+          "enable_log": true,
+          "file_path": "G:\\Meu Drive\\PDI\\UTFPR\\TCC\\Outputs\\saida_one_to_sing.csv",
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": false,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "outputs": {}
+        },
+        "csv_out3": {
+          "module": "models.node.output.file",
+          "type": "CSVFile",
+          "enable_log": true,
+          "file_path": "G:\\Meu Drive\\PDI\\UTFPR\\TCC\\Outputs\\saida_feat_extract.csv",
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": false,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "outputs": {}
+        }
+      }
+    }
+  }

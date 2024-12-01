@@ -1,0 +1,115 @@
+{
+    "nodes": {
+      "root": {
+        "coletas_emg": {
+          "module": "models.node.generator.file",
+          "type": "CSVFile",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_generate": true,
+            "print_buffer_size": false
+          },
+          "file_path": "C:\\Users\\italo\\OneDrive\\Documentos\\GitHub\\OpenBCI_Python_Frameworkork\\cues\\coletas\\A_antonio.csv",
+          "data_type": "float",
+          "sampling_frequency": 250,
+          "channel_column_names": [
+            "Fp1",
+            "C3"
+          ],
+          "timestamp_column_name": "time_board",
+          "outputs": {
+            "main": [
+              {
+                "node": "highpass",
+                "input": "main"
+              }
+            ],
+            "timestamp": [
+              {
+                "node": "merge",
+                "input": "slave_timestamp"
+              }
+            ]
+          }
+        }
+      },
+      "common": {
+        "highpass": {
+          "module": "models.node.processing.filter",
+          "type": "HighPass",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": true,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "low_cut_frequency_hz": 20.0,
+          "order": 5,
+          "outputs": {
+            "main": [
+              {
+                "node": "lowpass",
+                "input": "main"
+              }
+            ]
+          }
+        },
+        "lowpass": {
+          "module": "models.node.processing.filter",
+          "type": "LowPass",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": true,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "high_cut_frequency_hz": 100.0,
+          "order": 5,
+          "outputs": {
+            "main": [
+              {
+                "node": "merge",
+                "input": "slave_main"
+              }
+            ]
+          }
+        },
+        "merge": {
+            "module": "models.node.processing",
+            "type": "Merge",
+            "enable_log": true,
+            "slave_filling": "sample_and_hold",
+            "buffer_options": {
+                "clear_output_buffer_on_data_input": true,
+                "clear_input_buffer_after_process": true,
+                "clear_output_buffer_after_process": true,
+                "print_buffer_size": false
+            },
+            "outputs": {
+                "merged_main": [
+                    {
+                        "node": "csv_out",
+                        "input": "main"
+                    }
+                ],
+                "merged_timestamp": []
+            }
+        },
+        "csv_out": {
+          "module": "models.node.output.file",
+          "type": "CSVFile",
+          "enable_log": true,
+          "file_path": "C:\\Users\\italo\\OneDrive\\Documentos\\GitHub\\OpenBCI_Python_Frameworkork\\cues\\coletas\\processadas\\A_antonio.csv",
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": false,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "outputs": {}
+        }
+      }
+    }
+  }

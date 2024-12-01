@@ -1,5 +1,5 @@
 import abc
-from typing import Final, Any, Tuple
+from typing import Final, Any
 
 from sklearn.base import TransformerMixin, BaseEstimator
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
@@ -14,7 +14,7 @@ class LDA(SKLearnClassifier):
     can be used to classify data into two or more classes. 
 
     Attributes:
-        _MODULE_NAME (str): The name of the module(in this case ``node.processing.trainable.classifier``)
+        _MODULE_NAME (str): The name of the module(in this case ``node.processing.trainable.classifier.lda``)
 
     configuration.json usage: 
         **module** (*str*): The name of the module (``node.processing.trainable.classifier``)\n
@@ -52,7 +52,7 @@ class LDA(SKLearnClassifier):
         """
         super()._initialize_parameter_fields(parameters)
 
-    def _initialize_trainable_processor(self) -> Tuple[TransformerMixin, BaseEstimator]:
+    def _initialize_trainable_processor(self) -> (TransformerMixin, BaseEstimator):
         """ Initializes the trainable processor. In this case it initializes the ``LinearDiscriminantAnalysis`` classifier
         from sklearn.
 

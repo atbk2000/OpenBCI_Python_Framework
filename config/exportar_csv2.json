@@ -1,0 +1,120 @@
+{
+    "nodes": {
+      "root": {
+        "gal_trial_eeg": {
+          "module": "models.node.generator.file",
+          "type": "CSVFile",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_generate": true,
+            "print_buffer_size": false
+          },
+          "file_path": "G:\\Meu Drive\\PDI\\UTFPR\\TCC\\train\\subj1_series1_data.csv",
+          "data_type": "float",
+          "sampling_frequency": 500,
+          "channel_column_names": [
+            "Fp1",
+            "Fp2",
+            "F7",
+            "F3",
+            "Fz",
+            "F4",
+            "F8",
+            "FC5",
+            "FC1",
+            "FC2",
+            "FC6",
+            "T7",
+            "C3",
+            "Cz",
+            "C4",
+            "T8",
+            "TP9",
+            "CP5",
+            "CP1",
+            "CP2",
+            "CP6",
+            "TP10",
+            "P7",
+            "P3",
+            "Pz",
+            "P4",
+            "P8",
+            "PO9",
+            "O1",
+            "Oz",
+            "O2",
+            "PO10"
+          ],
+          "outputs": {
+            "main": [
+              {
+                "node": "bandpass",
+                "input": "main"
+              }
+            ],
+            "timestamp": []
+          }
+        }
+      },
+      "common": {
+        "bandpass": {
+          "module": "models.node.processing.filter",
+          "type": "BandPass",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": false,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "low_cut_frequency_hz": 8.0,
+          "high_cut_frequency_hz": 30.0,
+          "order": 6,
+          "outputs": {
+            "main": [
+              {
+                "node": "segmenter",
+                "input": "main"
+              }
+            ]
+          }
+        },
+        "segmenter": {
+          "module": "models.node.processing.segmenter",
+          "type": "FixedWindowSegmenter",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": false,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "window_size": 200,
+          "filling_value": "zero",
+          "outputs": {
+            "main": [
+              {
+                "node": "test",
+                "input": "main"
+              }
+            ]
+          }
+        },
+        "test": {
+          "module": "models.node.processing",
+          "type": "SignalCheck",
+          "enable_log": true,
+          "buffer_options": {
+            "clear_output_buffer_on_data_input": false,
+            "clear_input_buffer_after_process": true,
+            "clear_output_buffer_after_process": true,
+            "print_buffer_size": false
+          },
+          "outputs": {
+            "main": []
+          }
+        }
+      }
+    }
+  }

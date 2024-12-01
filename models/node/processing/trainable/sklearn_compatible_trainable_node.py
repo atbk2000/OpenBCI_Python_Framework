@@ -60,10 +60,10 @@ class SKLearnCompatibleTrainableNode(TrainableProcessingNode):
         self.sklearn_processor = None
         super()._initialize_parameter_fields(parameters)
         if self.sklearn_processor is None:
-            self.sklearn_processor: Tuple[TransformerMixin, BaseEstimator] = self._initialize_trainable_processor()
+            self.sklearn_processor: (TransformerMixin, BaseEstimator) = self._initialize_trainable_processor()
 
     @abc.abstractmethod
-    def _initialize_trainable_processor(self) -> Tuple[TransformerMixin, BaseEstimator]:
+    def _initialize_trainable_processor(self) -> (TransformerMixin, BaseEstimator):
         """ Initializes the trainable processor. This method should be implemented by the subclasses.
 
         :raises NotImplementedError: If the method is not implemented by the subclass.
@@ -131,8 +131,8 @@ class SKLearnCompatibleTrainableNode(TrainableProcessingNode):
         """
         formatted_data = np.asarray(raw_data.get_data_as_2d_array())
         formatted_data = np.moveaxis(formatted_data, 1, 0)
-        # if len(formatted_data.shape) > 2:
-        #     formatted_data = formatted_data.reshape(formatted_data.shape[0], formatted_data.shape[1]*formatted_data.shape[2])
+        if len(formatted_data.shape) > 2:
+            formatted_data = formatted_data.reshape(formatted_data.shape[0], formatted_data.shape[1]*formatted_data.shape[2])
         return formatted_data
 
     def _format_raw_label(self, raw_label: FrameworkData) -> Any:
@@ -192,18 +192,11 @@ class SKLearnCompatibleTrainableNode(TrainableProcessingNode):
         :param data: The data to train the processor.
         :type data: Any
         :param label: The label to train the processor.
-        :type label: Any
+        :type label: 
 
         :return: The trained processor.
         :rtype: Any
         """
-        # data_shape = data.shape
-        # if len(data_shape) > 2:
-        #     # Reshape array into a 2D array for fit function
-        #     windows = data_shape[0]
-        #     channels = data_shape[1]
-        #     window_size = data_shape[2]
-        #     data = data.reshape((windows, channels*window_size))
         return self.sklearn_processor.fit(data, label)
 
     def _train(self, data: FrameworkData, label: FrameworkData):

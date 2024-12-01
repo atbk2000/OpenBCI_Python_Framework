@@ -1,7 +1,6 @@
 .idea/*
 *.pyc
-venv/*
+venv
 __pycache__/*
-docs/*
-_build/*
-.github/*
+.venv/*
+.vscode/*
